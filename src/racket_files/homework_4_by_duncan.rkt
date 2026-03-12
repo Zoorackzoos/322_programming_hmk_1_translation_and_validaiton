@@ -307,11 +307,11 @@
     ;;  make length > 4 && length < 2 like algorithm
     ;;  
     [(binary-shape? e) #t ]
-    [
-      (if not(binary-shape? e)
-          (if (=(length e) 4)
-              (if (binary-op? (my-third(e))) (my-third(e)) )
-              (if (binary-op? (my-fourth(e))) (my-fourth(e)) )
+    [ 
+      (not(binary-shape? e)
+          ( (=(length e) 4)
+              ( (binary-op? (my-third(e))) (my-third(e)) )
+              ( (binary-op? (my-fourth(e))) (my-fourth(e)) )
           )
       )
     ]
