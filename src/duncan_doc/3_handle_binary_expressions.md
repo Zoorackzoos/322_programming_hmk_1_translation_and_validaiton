@@ -48,6 +48,31 @@ if it's 3:
 '(1 + +) ;;<-- bad
 ```
 
+# day 3 
+```racket
+;; validation tests. the correct return statment is rightwards of the test.
+`mr.t_validation_tests
+(= #t #t)
+```
+```racket
+'mr.t_validation_tests
+. . =: contract violation
+  expected: number?
+  given: #t
+```
+wtf am i doing here bro? 
+
+## what you must do
+```racket
+;; validation tests. the correct return statment is rightwards of the test.
+`mr.t_validation_tests
+(equal? #f #f)
+```
+```racket
+'mr.t_validation_tests
+#t
+```
+
 
 
 

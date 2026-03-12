@@ -286,44 +286,28 @@
       #t       ;;  return true 
     ]
     [
-     (not (= (null? e)) )
-      ;;idk man i'm geeked
+     (not (equal? (null? e) #t) ) ;; if( e != null ) 
+      (
+       cond
+        [
+         (literal? e) #t ;; if(e == 1,2,3...)
+        ]
+        [
+         (or                  ;; if( e[0] == literal || e[0] == list)
+          (literal?(car e))
+          (list?(car e))
+         )
+          (validate-program (cdr e)) #f
+           (car e)
+        ]
+      )
     ]
-    [
-     (literal? e);; if( e == -,+,/,*,1,2,3.... )
-      #t         ;;  return true
-    ]         
-    [
-     (unary-shape? e) ;; if( e == '(- x) || e == '(! x) )
-      #t              ;; return true
-    ]
-    [
-     (binary-shape? e)
-      #t
-    ]
-    [
-     (and                     ;; if(e.binary-shape == false)       
-      (not (binary-shape? e))
-     )
-     (cond                    
-       [
-        (binary-op? (my-third e)) ;; if( binary-op( e[2] )
-         (my-third e)             ;;   return e[3]   
-       ]
-       [
-        (binary-op? (my-fourth e)) ;; if( binary-op( e[3] )
-          (my-fourth e)            ;;   return e[3]
-       ]
-       [
-        else
-         e
-       ]
-     )
-    ]    
-    
     [
      else
-      e
+      (if (binary-op? (car e)) ;; if(e[0] == binary-op)
+          (validate-program (cdr e) #t) ;; recirsive call w/ e[1:]
+          (car e)
+      )
     ]
  )
 )
