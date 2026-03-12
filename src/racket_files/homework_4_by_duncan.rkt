@@ -309,8 +309,9 @@
     [(binary-shape? e) #t ]
     [
       (and
-        ( =(length e) 4)
-        ( >(length e) 4)
+        (or
+         ( =(length e) 4)
+         ( >(length e) 4))
         ( binary-op? (my-third e))
       )
       (my-third e) ;; return value 
@@ -406,3 +407,6 @@
 ;;(validate-program `- x) ;; x: unbound identifier in: x
 (validate-program `(- 1 -))
 (validate-program `(! 1 -))
+(length'(1 < 2 > 3))
+(> (length'(1 < 2 > 3)) 4)
+( binary-op? (my-third '(1 < 2 > 3)))
