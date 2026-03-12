@@ -31,7 +31,22 @@ available functions made by mr. T that deal with binary
        (binary-op? (my-second e))))
 ```
 
+# scale of what's put into validate-program
+if it's 1, it's a literal. that's fine.  
 
+if it's 2:
+```racket
+'(- 1)
+```
+then it's unary. that's acceptable  
+
+if it's 3:
+```racket
+'(1 + 1) ;;<-- good
+'(1 * 1)
+'(1 / 1)
+'(1 + +) ;;<-- bad
+```
 
 
 

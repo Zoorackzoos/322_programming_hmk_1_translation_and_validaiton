@@ -308,13 +308,12 @@
     ;;  
     [(binary-shape? e) #t ]
     [
-      (and
-        (or
-         ( =(length e) 4)
-         ( >(length e) 4))
-        ( binary-op? (my-third e))
+      (if not(binary-shape? e)
+          (if (=(length e) 4)
+              (if (binary-op? (my-third(e))) (my-third(e)) )
+              (if (binary-op? (my-fourth(e))) (my-fourth(e)) )
+          )
       )
-      (my-third e) ;; return value 
     ]
     
     ;; TODO: handle longer infix expressions with precedence
