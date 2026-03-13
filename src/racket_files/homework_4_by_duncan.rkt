@@ -363,14 +363,46 @@
 ;; ============================================================
 
 (define (infix->prefix e)
-  (cond
-    [(equal? (validate-program e) #t)
-     ;; TODO:
-     ;; Replace this placeholder with your translation logic.
-     e]
+ (cond
+  [
+   (equal? (validate-program e) #t)
+   ;; TODO:
+   ;; Replace this placeholder with your translation logic.
 
-    [else
-     (list 'err (validate-program e))]))
+   (cond
+        [
+            (number? e) e
+        ]
+        [
+            (boolean-literal? e)
+             (cond
+               [
+                (equal? e 'true) #t
+               ]
+               [
+                (equal? e 'false) #f
+               ]
+             )
+        ]
+        [
+         (= (length e) 3) (list (my-second e) (my-first e) (cdr(cdr e)))
+        ]
+        [
+         else 
+            (if 
+                ( > (length e) 3) ;; conditional 
+                (infix->prefix (list (my-second e) (my-first e) (list(cdr(cdr e)))) ) ;; if yes 
+                (list (my-second e) (my-first e) ) ;; if no
+            )
+        ]
+    )
+  ]
+  [
+   else
+   (list 'err (validate-program e))
+  ]
+ )
+)
 
 
 ;; ============================================================
@@ -398,13 +430,13 @@
 
 ;; translation tests
 `mr.t_translation_tests
-(infix->prefix 5)
-(infix->prefix 'true)
-(infix->prefix '(1 + 2))
-(infix->prefix '(1 + 2 * 3))
-(infix->prefix '((1 + 2) * 3))
-(infix->prefix '(false || !false))
-(infix->prefix '((2 * 3) < 7))
+(infix->prefix 5) ;; 5
+(infix->prefix 'true) ;; %#t
+(infix->prefix '(1 + 2)) ;; '(+ 1 2)
+(infix->prefix '(1 + 2 * 3)) ;; '(+ 1 (* 2 3) )
+(infix->prefix '((1 + 2) * 3)) ;; '(* 3(+ 1 2) )
+(infix->prefix '(false || !false)) ;; '(or false (not false) )
+(infix->prefix '((2 * 3) < 7)) ;; '( < (* 2 3) 7)
 
 `_
 `_
