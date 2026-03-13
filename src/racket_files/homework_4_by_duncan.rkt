@@ -61,10 +61,6 @@
   (or
    (equal? x 'true)
    (equal? x 'false)
-   (equal? x '!true)
-   (equal? x '!false)
-   (equal? x '!!true)
-   (equal? x '!!false)
   )
 )
 
@@ -260,7 +256,21 @@
 ;;
 ;; ============================================================
 
-;; (define (valid-unary? e))
+(define (weird-boolean-literal? x)
+  (or
+   (equal? x '!true)
+   (equal? x '!false)
+   (equal? x '!!true)
+   (equal? x '!!false)
+  )
+)
+
+(define (duncan-is-literal? x)
+  (or
+   (weird-boolean-literal? x)
+   (literal? x)
+  )
+)
 
 ;; ============================================================
 ;; validate-program
@@ -290,7 +300,7 @@
       #t
     ]
     [
-     (literal? e)
+      (duncan-is-literal? e)
       #t
     ]
     [
@@ -308,7 +318,7 @@
         [
          (= (length e) 1);; single element left, check it's a valid value
           (if (or
-               (literal? (car e))
+               (duncan-is-literal? (car e))
                (list? (car e))
               )
             #t      ;; yes_condition
@@ -368,7 +378,6 @@
    (equal? (validate-program e) #t)
    ;; TODO:
    ;; Replace this placeholder with your translation logic.
-
    (cond
         [
             (number? e) e
@@ -443,3 +452,6 @@
 `_
 
 'duncan_temp_tests
+(weird-boolean-literal? '!false)
+(literal? '!false)
+(or (literal? '!false) (weird-boolean-literal? '!false))
