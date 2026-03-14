@@ -394,15 +394,13 @@
              )
         ]
         [
-         (= (length e) 3) ;; conditional
-          ;; create a new list. 1 + 2 -> + 1 (2) -> + 1 2
-          (flatten (list (my-second e) (my-first e) (cdr(cdr e))) )
+         (= (length e) 3) (list (my-second e) (my-first e) (cdr(cdr e)))
         ]
         [
          else 
             (if 
                 ( > (length e) 3) ;; conditional 
-                (list (my-second e) (my-first e) (infix->prefix(flatten (list(cdr(cdr e))))) ) ;; if yes 
+                (infix->prefix (list (my-second e) (my-first e) (list(cdr(cdr e)))) ) ;; if yes 
                 (list (my-second e) (my-first e) ) ;; if no
             )
         ]
@@ -454,7 +452,6 @@
 `_
 
 'duncan_temp_tests
-'(1 + 2 * 3)
-'(+ 1 )
-(list(cdr(cdr '(1 + 2 * 3))))
-(list (my-second '(1 + 2 * 3)) (my-first '(1 + 2 * 3)) (flatten (list(cdr(cdr '(1 + 2 * 3))))))
+(weird-boolean-literal? '!false)
+(literal? '!false)
+(or (literal? '!false) (weird-boolean-literal? '!false))
