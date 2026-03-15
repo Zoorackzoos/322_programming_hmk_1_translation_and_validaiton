@@ -273,24 +273,24 @@
 )
 
 (define (lowest-precedence-position list iterator index_of_lowest_precedent)
- (println list)
- (println iterator)
- (println index_of_lowest_precedent)
+ ;(println list)
+ ;(println iterator)
+ ;(println index_of_lowest_precedent)
  ;;(println (list-ref list index_of_lowest_precedent))
  (if
   (= iterator (length list)) ;; conditional
   index_of_lowest_precedent ;; if yes
   (if ;; if no
-   (and ;; conditional
-    (symbol? (list-ref list iterator))
-    (or
-     (= index_of_lowest_precedent -1)
-     (<
-      (precedence (list-ref list iterator))
-      (precedence (list-ref list index_of_lowest_precedent))
+   (and
+     (> (precedence (list-ref list iterator)) 0)
+     (or
+      (= index_of_lowest_precedent -1)
+      (<
+       (precedence (list-ref list iterator))
+       (precedence (list-ref list index_of_lowest_precedent))
+      )
      )
     )
-   )
    (lowest-precedence-position list (+ iterator 1) iterator) ;; if yes 
    (lowest-precedence-position list (+ iterator 1) index_of_lowest_precedent) ;; if no
   )
@@ -428,11 +428,11 @@
    else
 
    (list
-    (println "the operator")
+    ;(println "the operator")
     (list-ref e (lowest-precedence-position e 0 -1))
-    (println "the left")
+    ;(println "the left")
     (infix->prefix (take e (lowest-precedence-position e 0 -1)))
-    (println "the right")
+    ;(println "the right")
     (infix->prefix (drop e (+ (lowest-precedence-position e 0 -1) 1)))
    )
   ]
@@ -474,7 +474,6 @@
 (infix->prefix '(1 + 2)) ;; '(+ 1 2)
 (infix->prefix '(1 + 2 * 3)) ;; '(+ 1 (* 2 3) )
 (infix->prefix '((1 + 2) * 3)) ;; '(* (+ 1 2) 3)
-'here!!!!!!!!!
 (infix->prefix '(false || !false)) ;; '(or false (not false) )
 (infix->prefix '((2 * 3) < 7)) ;; '( < (* 2 3) 7)
 
