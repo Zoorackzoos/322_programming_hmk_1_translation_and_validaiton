@@ -273,6 +273,10 @@
 )
 
 (define (lowest-precedence-position list iterator index_of_lowest_precedent)
+ (println list)
+ (println iterator)
+ (println index_of_lowest_precedent)
+ ;;(println (list-ref list index_of_lowest_precedent))
  (if
   (= iterator (length list)) ;; conditional
   index_of_lowest_precedent ;; if yes
@@ -395,55 +399,47 @@
 ;; ============================================================
 
 (define (infix->prefix e)
+
  (cond
+
+  ;; 1. literal values
   [
-   (equal? (validate-program e) #t)
-   ;; TODO:
-   ;; Replace this placeholder with your translation logic.
-   (cond
-        [
-            (number? e) e
-        ]
-        [
-            (boolean-literal? e)
-             (cond
-               [
-                (equal? e 'true) #t
-               ]
-               [
-                (equal? e 'false) #f
-               ]
-             )
-        ]
-        [
-         (= (length e) 3) ;; conditional
-          ;; create a new list. 1 + 2 -> + 1 2
-          (list (my-second e) (my-first e) (my-third e))
-        ]
-        [
-         else 
-          (if
-           ( > (length e) 3) ;; conditional
-           (if ;; if yes 
-            (list? (my-first e))  ;; conditional
-            (if ;; if yes
-             (= (length (my-first e)) 3) ;; conditional
-             (list (my-second e) (infix->prefix (my-first e)) (my-third e)) ;; if yes
-             (list (my-second e) (my-first e) (infix->prefix(flatten (list(cdr(cdr e))))) ) ;; if no
-            )
-            (list (my-second e) (my-first e) (infix->prefix(flatten (list(cdr(cdr e))))) ) ;; if no
-           )
-           (list (my-second e) (my-first e) ) ;; if no 
-          )
-         ]
-    )
+   (duncan-is-literal? e)
+   e
   ]
+
+  ;; 2. unary expressions
+  [
+   (unary-shape? e)
+   (list
+    (my-first e)
+    (infix->prefix (my-second e))
+   )
+  ]
+
+  ;; 3. unwrap parentheses
+  [
+   (= (lowest-precedence-position e 0 -1) -1)
+   (infix->prefix (my-first e))
+  ]
+
+  ;; 4. normal infix expression
   [
    else
-   (list 'err (validate-program e))
+
+   (list
+    (println "the operator")
+    (list-ref e (lowest-precedence-position e 0 -1))
+    (println "the left")
+    (infix->prefix (take e (lowest-precedence-position e 0 -1)))
+    (println "the right")
+    (infix->prefix (drop e (+ (lowest-precedence-position e 0 -1) 1)))
+   )
   ]
+
  )
 )
+
 
 
 
@@ -478,6 +474,7 @@
 (infix->prefix '(1 + 2)) ;; '(+ 1 2)
 (infix->prefix '(1 + 2 * 3)) ;; '(+ 1 (* 2 3) )
 (infix->prefix '((1 + 2) * 3)) ;; '(* (+ 1 2) 3)
+'here!!!!!!!!!
 (infix->prefix '(false || !false)) ;; '(or false (not false) )
 (infix->prefix '((2 * 3) < 7)) ;; '( < (* 2 3) 7)
 
