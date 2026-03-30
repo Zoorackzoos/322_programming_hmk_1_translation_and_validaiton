@@ -144,31 +144,41 @@
 ;; ============================================================
 
 (define (precedence op)
-  (cond
-    [(or (equal? op '-)
-         (equal? op '!)
-         (equal? op 'not))
-     7]
-    [(or (equal? op '*)
-         (equal? op '/))
-     6]
-    [(or (equal? op '+)
-         (equal? op '-))
-     5]
-    [(or (equal? op '<)
-         (equal? op '<=)
-         (equal? op '>)
-         (equal? op '>=))
-     4]
-    [(or (equal? op '==)
-         (equal? op '!=))
-     3]
-    [(equal? op '&&)
-     2]
-    [(equal? op '||)
-     1]
-    [else
-     0]))
+ (cond
+  [
+   (or (equal? op '!) (equal? op 'not))  ;; removed - from here
+   7
+  ]
+  [
+   (or (equal? op '*) (equal? op '/))
+   6
+  ]
+  [
+   (or (equal? op '+) (equal? op '-))    ;; - now correctly gets 5
+   5
+  ]
+  [
+   (or (equal? op '<) (equal? op '<=) (equal? op '>) (equal? op '>=))
+   4
+  ]
+  [
+   (or (equal? op '==) (equal? op '!=))
+   3
+  ]
+  [
+   (equal? op '&&)
+   2
+  ]
+  [
+   (equal? op '||)
+   1
+  ]
+  [
+   else
+   0
+  ]
+ )
+)
 
 
 ;; ============================================================
@@ -273,9 +283,9 @@
 )
 
 (define (lowest-precedence-position list iterator index_of_lowest_precedent)
- (println list)
- (println iterator)
- (println index_of_lowest_precedent)
+ ;;(println list)
+ ;;(println iterator)
+ ;;(println index_of_lowest_precedent)
  ;;(println (list-ref list index_of_lowest_precedent))
  (if
   (= iterator (length list)) ;; conditional
@@ -530,4 +540,5 @@
 `_
 
 'Barbismo_tests
+'(- (+ 2 (* 3 4)) 1)
 (infix->prefix '(2 + 3 * 4 - 1))
