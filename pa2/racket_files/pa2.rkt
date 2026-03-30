@@ -49,11 +49,35 @@
 ;; Duncan helper functions
 ;; ============================================================
 (define (is-unary-bool? ast)
-  (println "__is-unary-bool?")
+  (println "            is-unary-bool?")
   (and
    (equal? (my-first ast) '!)
    (boolean-literal? (my-second ast))
+   (begin
+     (println "            unary bool detected (#t)")
+     #t
+   )
   )
+)
+
+(define (is-negative-number? ast)
+  (println "            is-negative-number?")
+  (and
+   (equal? (my-first ast) '-)
+   (number? (my-second ast))
+   (begin
+     (println "            negative number detected (#t)")
+     #t
+   )
+  )
+)
+
+(define (eval-unary-bool ast)
+  (println "            eval-unary-bool")
+)
+
+(define (eval-negative-number ast)
+  (println "            eval-negative-number")
 )
 
 ;; ============================================================
@@ -71,7 +95,10 @@
 ;; ============================================================
 
 (define (evaluate-prefix ast)
-  (println "_evaluate-prefix")
+  (println "    evaluate-prefix")
+  (print "   ")
+  (println ast)
+  
   (cond
     ;; Base cases: literals
     [(number? ast) ast]
@@ -88,13 +115,27 @@
      ;;  '(! 5)
      ;;    are not allowed by teh program.
      ;; invalid input i guess
-     (println "_unary conditional")
-      ;;conditional
-      (unary-shape? ast)
-      ;;if yes
-      (is-unary-bool? ast)
-      ;;if no
-      '(err "type error")
+     (println "    unary conditionals in evaluate-prefix")
+     (cond
+       [
+        (unary-shape? ast) ;;conditional
+        (begin
+         (println "        this is unary")
+         (cond ;;if yes
+           [
+            (is-unary-bool? ast) (eval-unary-bool ast)
+           ]
+           [
+            (is-negative-number? ast) (eval-negative-number ast)
+           ]
+           [
+            else
+             '(err "type error")
+           ]
+         )
+        )
+       ]
+     )
     ]
     ;; TODO: handle binary operators
     ;; TODO: implement type checking
@@ -149,4 +190,9 @@
 ;; (evaluate-program '(1 + true))
 ;; (evaluate-program '(1 / (2 - 2)))
 (println "Barbismo test cases")
+(evaluate-prefix '(- 1))
 (evaluate-prefix '(- true))
+(evaluate-prefix '(- false))
+(evaluate-prefix '(! 1))
+(evaluate-prefix '(! true))
+(evaluate-prefix '(! false))
