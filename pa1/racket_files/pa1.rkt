@@ -273,9 +273,9 @@
 )
 
 (define (lowest-precedence-position list iterator index_of_lowest_precedent)
- ;(println list)
- ;(println iterator)
- ;(println index_of_lowest_precedent)
+ (println list)
+ (println iterator)
+ (println index_of_lowest_precedent)
  ;;(println (list-ref list index_of_lowest_precedent))
  (if
   (= iterator (length list)) ;; conditional
@@ -285,7 +285,7 @@
      (> (precedence (list-ref list iterator)) 0)
      (or
       (= index_of_lowest_precedent -1)
-      (<
+      (<=
        (precedence (list-ref list iterator))
        (precedence (list-ref list index_of_lowest_precedent))
       )
@@ -318,6 +318,7 @@
    (not (duncan-is-literal? e))
    (not (binary-op? e))
    (not (unary-op? e))
+   (not (list? e))
   )
 )
 
@@ -333,7 +334,13 @@
       (contains-string? e (+ index 1) e-length)
     ]
   )
-  
+)
+
+(define (translate-unary-op e)
+  (cond
+   [ (equal? e '!) 'not ]
+   [ else e ]
+  )
 )
 
 ;; ============================================================
@@ -356,6 +363,7 @@
 ;; ============================================================
 
 (define (validate-program e)
+  ;;(println '_validate-program)
   (
    cond
     [
@@ -375,6 +383,7 @@
       e
     ]
     [
+     ;;(println '__contains-string?)
      ;;(contains-string? e index e-length)
      (not (equal? (contains-string? e 0 (length e)) #f)) (contains-string? e 0 (length e))
     ]
@@ -455,7 +464,7 @@
   [
    (unary-shape? e)
    (list
-    (my-first e)
+    (translate-unary-op (my-first e))
     (translate-weird-bools (infix->prefix (my-second e)))
    )
   ]
@@ -521,4 +530,4 @@
 `_
 
 'Barbismo_tests
-(validate-program '(hello))
+(infix->prefix '(2 + 3 * 4 - 1))
