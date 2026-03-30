@@ -54,10 +54,17 @@
 ;; Literal checks
 ;; ============================================================
 
+;; goofy ahh funcitons man. 
+;; if this is a true or a true or a false, then true.
+;; otherwise false. 
 (define (boolean-literal? x)
-  (or (equal? x 'true)
-      (equal? x 'false)))
+  (or
+   (equal? x 'true)
+   (equal? x 'false)
+  )
+)
 
+;; returns true if the input is a number or boolean 
 (define (literal? x)
   (or (number? x)
       (boolean-literal? x)))
@@ -91,6 +98,10 @@
       (equal? x '!)
       (equal? x 'not)))
 
+;; true if either of these:
+;;   +, -, *, /
+;;   &&, ||
+;;   ==, !=, <, <=, >, >= 
 (define (binary-op? x)
   (or (arithmetic-op? x)
       (boolean-op? x)
@@ -195,8 +206,8 @@
 ;; this is a word nobody uses.
 ;;     https://docs.google.com/document/d/1HOnXb8v4rdqWKvQWRcCS--AHOB0hQhTt20cyo58_x1s/edit?usp=sharing
 ;; if e is a list, and has length 2, and the 1st element is either ! or -.
-;;    like: -x, !x
-;;    not: ++x, --x, ~x
+;;    like: - x, ! x
+;;    not: + + x, - - x, ~ x, -x, !x, !!x, --x
 (define (unary-shape? e)
   (and (list? e)
        (= (length e) 2)
@@ -208,6 +219,11 @@
   (and (list? e)
        (= (length e) 3)))
 
+;; has to be a list of length 3.
+;; the 2nd piece of the list has to be a "binary operation":
+;;   +, -, *, /
+;;   &&, ||
+;;   ==, !=, <, <=, >, >= 
 (define (binary-shape? e)
   (and (three-part-shape? e)
        (binary-op? (my-second e))))
@@ -240,6 +256,62 @@
 ;;
 ;; ============================================================
 
+(define (weird-boolean-literal? x)
+  (or
+   (equal? x '!true)
+   (equal? x '!false)
+   (equal? x '!!true)
+   (equal? x '!!false)
+  )
+)
+
+(define (duncan-is-literal? x)
+  (or
+   (weird-boolean-literal? x)
+   (literal? x)
+  )
+)
+
+(define (lowest-precedence-position list iterator index_of_lowest_precedent)
+ ;(println list)
+ ;(println iterator)
+ ;(println index_of_lowest_precedent)
+ ;;(println (list-ref list index_of_lowest_precedent))
+ (if
+  (= iterator (length list)) ;; conditional
+  index_of_lowest_precedent ;; if yes
+  (if ;; if no
+   (and
+     (> (precedence (list-ref list iterator)) 0)
+     (or
+      (= index_of_lowest_precedent -1)
+      (<
+       (precedence (list-ref list iterator))
+       (precedence (list-ref list index_of_lowest_precedent))
+      )
+     )
+    )
+   (lowest-precedence-position list (+ iterator 1) iterator) ;; if yes 
+   (lowest-precedence-position list (+ iterator 1) index_of_lowest_precedent) ;; if no
+  )
+ )
+)
+
+(define (translate-op op)
+ (cond
+  [(equal? op '||) 'or]
+  [(equal? op '&&) 'and]
+  [else op]
+ )
+)
+
+(define (translate-weird-bools bool)
+ (cond
+  [(equal? bool '!false) '(not false)]
+  [(equal? bool '!true) '(not true)]
+  [else bool]
+ )
+)
 
 ;; ============================================================
 ;; validate-program
@@ -261,20 +333,64 @@
 ;; ============================================================
 
 (define (validate-program e)
-  (cond
-    [(literal? e) ;;checks if it's a number or a -,+,/,*,
-     #t]          ;;so if you put in a number it's just true, or if ture tures
-
-    ;; TODO: handle unary expressions
-    
-    
-    ;; TODO: handle binary expressions
-    ;; TODO: handle longer infix expressions with precedence
-    ;; TODO: return smallest offending piece on failure
-
-    [else
-     e]))
-
+  (
+   cond
+    [
+     (null? e)
+      #t
+    ]
+    [
+      (duncan-is-literal? e)
+      #t
+    ]
+    [
+     (binary-op? e)
+      e
+    ]
+    [
+     (list? e)
+      (
+       cond
+        [
+         (unary-shape? e)
+          #t
+        ]
+        [
+         (= (length e) 1);; single element left, check it's a valid value
+          (if (or
+               (duncan-is-literal? (car e))
+               (list? (car e))
+              )
+            #t      ;; yes_condition
+            (car e) ;; no_condtion
+          )
+        ]
+        [
+         (< (length e) 3) ;; length 2 is always malformed
+          (car e)
+        ]
+        [
+         (not (binary-op? (my-second e)))
+          (my-second e)
+        ]
+        [
+         (and (> (length e) 3)
+              (non-associative-op? (my-second e))
+         )
+          (my-second (cddr e))  ;; return the NEXT operator as the offender
+        ]
+        [
+         else
+          (validate-program (cddr e))
+        ]
+      )
+    ]
+    [
+     else
+      #t
+    ]
+  )
+)
 
 ;; ============================================================
 ;; infix->prefix
@@ -296,14 +412,44 @@
 ;; ============================================================
 
 (define (infix->prefix e)
-  (cond
-    [(equal? (validate-program e) #t)
-     ;; TODO:
-     ;; Replace this placeholder with your translation logic.
-     e]
+ (cond
 
-    [else
-     (list 'err (validate-program e))]))
+  ;; literal values
+  [
+   (duncan-is-literal? e)
+   (translate-weird-bools e)
+  ]
+
+  ;; unary expressions
+  [
+   (unary-shape? e)
+   (list
+    (my-first e)
+    (translate-weird-bools (infix->prefix (my-second e)))
+   )
+  ]
+
+  ;; unwrap parentheses
+  [
+   (= (lowest-precedence-position e 0 -1) -1)
+   (infix->prefix (my-first e))
+  ]
+
+  ;; normal infix expression
+  [
+   else
+
+   (list
+    (translate-op (list-ref e (lowest-precedence-position e 0 -1)))
+    (translate-weird-bools (infix->prefix (take e (lowest-precedence-position e 0 -1))))
+    (translate-weird-bools (infix->prefix (drop e (+ (lowest-precedence-position e 0 -1) 1))))
+   )
+  ]
+ )
+)
+
+
+
 
 
 ;; ============================================================
@@ -312,22 +458,45 @@
 ;; You may add more tests as you work.
 ;; ============================================================
 
-;; validation tests
-(validate-program 5)
-(validate-program 'true)
-(validate-program '(1 + 2))
-(validate-program '(1 + 2 * 3))
-(validate-program '((1 + 2) * 3))
-(validate-program '(false || !false))
-(validate-program '(1 + * 3))
-(validate-program '(1 < 2 > 3))
-(validate-program '(true && && false))
+;; validation tests. the correct return statment is rightwards of the test.
+`mr.t_validation_tests
+(validate-program 5) ;; #t
+(validate-program 'true) ;; #t
+(validate-program '(1 + 2)) ;; #t
+(validate-program '(1 + 2 * 3)) ;; #t
+(validate-program '((1 + 2) * 3)) ;; #t
+(validate-program '(false || !false)) ;; #t
+'meant_to_fail_tests
+(validate-program '(1 + * 3)) ;; `*
+(validate-program '(1 < 2 > 3)) ;; `>
+(validate-program '(true && && false)) ;; `&&
+
+`_
+`_
+`_
 
 ;; translation tests
-(infix->prefix 5)
-(infix->prefix 'true)
-(infix->prefix '(1 + 2))
-(infix->prefix '(1 + 2 * 3))
-(infix->prefix '((1 + 2) * 3))
-(infix->prefix '(false || !false))
-(infix->prefix '((2 * 3) < 7))
+`mr.t_translation_tests
+(infix->prefix 5) ;; 5
+(infix->prefix 'true) ;; %#t
+(infix->prefix '(1 + 2)) ;; '(+ 1 2)
+(infix->prefix '(1 + 2 * 3)) ;; '(+ 1 (* 2 3) )
+(infix->prefix '((1 + 2) * 3)) ;; '(* (+ 1 2) 3)
+(infix->prefix '(false || !false)) ;; '(or false (not false) )
+(infix->prefix '((2 * 3) < 7)) ;; '( < (* 2 3) 7)
+
+`_
+`_
+`_
+
+'Barbismo_tests
+(infix->prefix '(2 * 3)) ;; '(* 2 3)
+(infix->prefix '(2 * 3 + 4)) ;; '(+ (* 2 3) 4)
+(infix->prefix '(2 + 3 * 4 + 5)) ;; '(+ (+ 2 (* 3 4)) 5)
+(infix->prefix '((2 + 3))) ;; '(+ 2 3)
+(infix->prefix '((2 + 3) * (4 + 5))) ;; '(* (+ 2 3) (+ 4 5))
+(infix->prefix '(!true)) ;; '(not true)
+(infix->prefix '(!false)) ;; '(not false)
+(infix->prefix '(true && false)) ;; '(and true false)
+(infix->prefix '(true || false)) ;; '(or true false)
+(infix->prefix '(1 < 2)) ;; '(< 1 2)
