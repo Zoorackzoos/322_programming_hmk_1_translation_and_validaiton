@@ -1,10 +1,4 @@
-C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -S C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments -B C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug
--- The C compiler identification is GNU 13.1.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/Users/User/AppData/Local/Programs/CLion/bin/mingw/bin/gcc.exe - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Configuring done (3.9s)
--- Generating done (0.5s)
--- Build files have been written to: C:/Users/User/Desktop/code_stuff/CSCE/CSCE_322_AKA_programming_language_concepts/322_programming_assignments/cmake-build-debug
+C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -S C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments -B C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: C:/Users/dunca/Desktop/code_files/CSCE/CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class/322_Clion_super_folder/322_programming_assignments/cmake-build-debug

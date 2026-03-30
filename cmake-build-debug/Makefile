@@ -47,19 +47,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f
+RM = C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments
+CMAKE_SOURCE_DIR = C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -67,7 +67,7 @@ CMAKE_BINARY_DIR = C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programmin
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
-	C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -77,7 +77,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -86,16 +86,16 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main codegen target
 codegen: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 codegen
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles 0
 .PHONY : codegen
 
 # The main clean target

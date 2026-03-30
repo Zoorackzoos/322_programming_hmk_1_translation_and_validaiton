@@ -43,19 +43,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\User\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f
+RM = C:\Users\dunca\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments
+CMAKE_SOURCE_DIR = C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/depend.make
@@ -72,18 +72,18 @@ CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/codegen:
 .PHONY : CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/codegen
 
 CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj: CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/flags.make
-CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj: C:/Users/User/Desktop/code_stuff/CSCE/CSCE_322_AKA_programming_language_concepts/322_programming_assignments/src/main.c
+CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj: C:/Users/dunca/Desktop/code_files/CSCE/CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class/322_Clion_super_folder/322_programming_assignments/src/main.c
 CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj: CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj"
-	C:\Users\User\AppData\Local\Programs\CLion\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj -MF CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.obj.d -o CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.obj -c C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\src\main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj"
+	C:\Users\dunca\AppData\Local\Programs\CLion\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.obj -MF CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.obj.d -o CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.obj -c C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\src\main.c
 
 CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.i"
-	C:\Users\User\AppData\Local\Programs\CLion\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\src\main.c > CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.i
+	C:\Users\dunca\AppData\Local\Programs\CLion\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\src\main.c > CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.i
 
 CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.s"
-	C:\Users\User\AppData\Local\Programs\CLion\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\src\main.c -o CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.s
+	C:\Users\dunca\AppData\Local\Programs\CLion\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\src\main.c -o CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\src\main.c.s
 
 # Object files for target 322_programming_hmk_1_translation_and_validaiton
 322_programming_hmk_1_translation_and_validaiton_OBJECTS = \
@@ -97,7 +97,7 @@ CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/src/main.c.s: cm
 322_programming_hmk_1_translation_and_validaiton.exe: CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/linkLibs.rsp
 322_programming_hmk_1_translation_and_validaiton.exe: CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/objects1.rsp
 322_programming_hmk_1_translation_and_validaiton.exe: CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable 322_programming_hmk_1_translation_and_validaiton.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable 322_programming_hmk_1_translation_and_validaiton.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -109,6 +109,6 @@ CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/clean:
 .PHONY : CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/clean
 
 CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug C:\Users\User\Desktop\code_stuff\CSCE\CSCE_322_AKA_programming_language_concepts\322_programming_assignments\cmake-build-debug\CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug C:\Users\dunca\Desktop\code_files\CSCE\CSCE_322_AKA_programming_language_concepts_AKA_mr_t_class\322_Clion_super_folder\322_programming_assignments\cmake-build-debug\CMakeFiles\322_programming_hmk_1_translation_and_validaiton.dir\DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/322_programming_hmk_1_translation_and_validaiton.dir/depend
 
