@@ -314,16 +314,23 @@
 )
 
 (define (is-string? e)
-  
+  (and
+   (not (duncan-is-literal? e))
+   (not (binary-op? e))
+   (not (unary-op? e))
+  )
 )
 
 (define (contains-string? e index e-length)
   ;;technically you could do (length e) every time instead of e-length.
   ;;but having it be a parameter makes less method calls, thuss effecincy++
   (cond
-    (not [list?]) e
+    [ (= index e-length) #f ]
+    [ (not (list? e)) e ]
+    [ (is-string? (list-ref e index)) (list-ref e index) ]
     [
-     
+     else
+      (contains-string? e (+ index 1) e-length)
     ]
   )
   
@@ -366,6 +373,10 @@
     [
      (not (list? e))
       e
+    ]
+    [
+     ;;(contains-string? e index e-length)
+     (not (equal? (contains-string? e 0 (length e)) #f)) (contains-string? e 0 (length e))
     ]
     [
      (list? e)
@@ -510,4 +521,4 @@
 `_
 
 'Barbismo_tests
-(validate-program ('hello))
+(validate-program '(hello))
