@@ -464,6 +464,11 @@
 (define (infix->prefix e)
  (cond
 
+  ;;not valid program
+  [
+   (not (equal? (validate-program e) #t)) (list 'err (validate-program e))
+  ]
+   
   ;; literal values
   [
    (duncan-is-literal? e)
@@ -540,5 +545,5 @@
 `_
 
 'Barbismo_tests
-'(- (+ 2 (* 3 4)) 1)
-(infix->prefix '(2 + 3 * 4 - 1))
+'(err *)
+(infix->prefix '(1 + * 3))
