@@ -77,6 +77,27 @@
 
 (define (eval-unary-bool ast)
   (println "            eval-unary-bool")
+  ;;possible correct answers:
+  ;;  ! true
+  ;;  ! false
+  ;;  not true
+  ;;  not false
+  (cond
+    [
+     (equal? (my-second ast) 'true)
+      (begin
+        (println "                true -> false")
+        'false
+      )
+    ]
+    [
+     (equal? (my-second ast) 'false)
+      (begin
+        (println "                false -> true")
+        'true
+      )
+    ]
+  )
 )
 
 (define (eval-negative-number ast)
@@ -126,37 +147,39 @@
      ;;    are not allowed by teh program.
      ;; invalid input i guess
      (println "    unary conditionals in evaluate-prefix")
-     (cond
-       [
-        (unary-shape? ast) ;;conditional
-        (begin
-         (println "        this is unary")
-         (cond ;;if yes
-           [
-            (is-unary-bool? ast) (eval-unary-bool ast)
-           ]
-           [
-            (is-negative-number? ast) (eval-negative-number ast)
-           ]
-           [
-            else
-             '(err "type error")
-           ]
+     (equal? (unary-shape? ast) #t ;;conditional 
+      (begin
+        (println "        this is unary")
+        (cond ;;if yes
+          [
+           (is-unary-bool? ast) (eval-unary-bool ast)
+          ]
+          [
+           (is-negative-number? ast) (eval-negative-number ast)
+          ]
+          [
+           else
+           '(err "type error")
+          ]
          )
-        )
-       ]
+       )
      )
     ]
+    
     ;; TODO: handle binary operators
+    [
+     (println "    binary conditionals in evaluate-prefix")
+     (binary-shape? ast) (println "fuck")
+    ]
     ;; TODO: implement type checking
     ;; TODO: implement division by zero check
     ;; TODO: propagate errors from subexpressions
 
     [
      else
-     ;; Placeholder
-     ast
-     ]
+      ;; Placeholder
+      ast
+    ]
   )
 )
 
@@ -181,9 +204,13 @@
     ;; 1. Call your PA1 infix->prefix
     ;; 2. If it returns an error, return that error
     ;; 3. If it returns a valid AST, pass it to evaluate-prefix
-    [else
-     ;; Placeholder
-     e]))
+    [
+     else
+      ;; Placeholder
+      e
+    ]
+  )
+)
 
 
 ;; ============================================================
@@ -192,17 +219,28 @@
 ;; You may add more tests as you work.
 ;; ============================================================
 
-(println "Mr T test cases")
-;; (evaluate-program 5)
+;;(println "Mr T test cases")
+;;(evaluate-program 5)
 ;; (evaluate-program '(1 + 2))
 ;; (evaluate-program '(1 + 2 * 3))
 ;; (evaluate-program '(1 + * 3))
 ;; (evaluate-program '(1 + true))
 ;; (evaluate-program '(1 / (2 - 2)))
-(println "Barbismo test cases")
-(evaluate-prefix '(- 1))
+
+;;(println "Barbismo test cases | unary")
+;;(evaluate-prefix '(- 1))
 ;;(evaluate-prefix '(- true))
 ;;(evaluate-prefix '(- false))
+;;(evaluate-prefix '(not 1))
+;;(evaluate-prefix '(not true))
+;;(evaluate-prefix '(not false))
 ;;(evaluate-prefix '(! 1))
 ;;(evaluate-prefix '(! true))
 ;;(evaluate-prefix '(! false))
+
+(println "mr.t pa2 grader tests")
+(unary-shape? '(1 + 2))
+(evaluate-prefix '(1 + 2))
+;;(evaluate-prefix '(5 - 2))
+;;(evaluate-prefix '(3 * 4))
+;;(evaluate-prefix '(8 / 2)))
