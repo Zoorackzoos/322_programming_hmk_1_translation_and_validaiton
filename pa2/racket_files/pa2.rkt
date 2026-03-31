@@ -84,7 +84,10 @@
   ;;like the only outcome you could have here is negative.
   ;;so just set it negative.
   (print "                ")
-  (println (- (my-second ast) (* (my-second ast) 2)) )
+  (begin
+    (println (- (my-second ast) (* (my-second ast) 2)) )
+    (- (my-second ast) (* (my-second ast) 2))
+  )
 )
 
 ;; ============================================================
