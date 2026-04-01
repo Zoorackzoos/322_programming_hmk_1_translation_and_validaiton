@@ -313,11 +313,33 @@
   )
 
   ;;return value
-  (convert-racket-bool-to-prefix-bool
-   (and
-    (equal? (my-first ast) 'true)
-    (equal? (my-third ast) 'true)
-   )
+  (cond
+    [
+     ( equal?
+      (and
+       (equal? (my-first ast) 'true)
+       (equal? (my-third ast) 'true)
+      )
+      #t
+     )
+     (begin
+       (println "                #t -> 'true")
+       'true
+     )
+    ]
+    [
+     ( equal?
+      (and
+       (equal? (my-first ast) 'true)
+       (equal? (my-third ast) 'true)
+      )
+      #f
+     )
+     (begin
+       (println "                #f -> 'false")
+       'false
+     )
+    ]
   )
 )
 
@@ -329,26 +351,6 @@
    (boolean-literal? (my-third ast))
    (equal? (my-second ast) '||)
    (eval-1v1-boolean-or-conditional ast)
-  )
-)
-
-(define (convert-racket-bool-to-prefix-bool bool)
-  (println "                convert-racket-bool-to-prefix-bool")
-  (cond
-    [
-     (equal? bool #t)
-     (begin
-       (println "                    #t -> 'true")
-       'true
-     )
-    ]
-    [
-     (equal? bool #f)
-     (begin
-       (println "                    #f -> 'false")
-       'false
-     )
-    ]
   )
 )
 
@@ -368,11 +370,33 @@
   )
 
   ;;return value
-  (convert-racket-bool-to-prefix-bool
-   (or
-    (equal? (my-first ast) 'true)
-    (equal? (my-third ast) 'true)
-   )
+  (cond
+    [
+     ( equal?
+      (or
+       (equal? (my-first ast) 'true)
+       (equal? (my-third ast) 'true)
+      )
+      #t
+     )
+     (begin
+       (println "                #t -> 'true")
+       'true
+     )
+    ]
+    [
+     ( equal?
+      (or
+       (equal? (my-first ast) 'true)
+       (equal? (my-third ast) 'true)
+      )
+      #f
+     )
+     (begin
+       (println "                #f -> 'false")
+       'false
+     )
+    ]
   )
 )
 
@@ -526,11 +550,11 @@
 (println "barbismo 1v1 boolean and condition tests")
 ;;(evaluate-prefix '(true && true))
 ;;(evaluate-prefix '(false && false))
-(evaluate-prefix '(false && true))
+;;(evaluate-prefix '(false && true))
 ;;(evaluate-prefix '(true && false))
 
 ;;(println "barbismo 1v1 boolean or condition tests")
 ;;(evaluate-prefix '(true || true))
-;;(evaluate-prefix '(false || false))
+(evaluate-prefix '(false || false))
 ;;(evaluate-prefix '(false || true))
 ;;(evaluate-prefix '(true || false))
