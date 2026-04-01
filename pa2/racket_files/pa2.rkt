@@ -166,9 +166,100 @@
   )
 )
 
+(define (adition-conditionals ast)
+  (println "        adition-conditionals")
+  (and
+   (binary-shape? ast)
+   (and
+    (println "            is +?")
+    (equal? (my-second ast) '+)
+    (eval-addition ast)
+    )
+   )
+)
+
 (define (eval-addition ast)
-  (println "            eval-negative-number")
+  (println "            eval-addition")
+  (print "                ")
+  (print (my-first ast))
+  (print " + ")
+  (println (my-third ast))
+  (print "                ")
+  (println (+ (my-first ast) (my-third ast)))
+  
   (+ (my-first ast) (my-third ast))
+)
+
+(define (subtraction-conditionals ast)
+  (println "        subtraction-conditionals")
+  (and
+   (binary-shape? ast)
+   (and
+    (println "            is -?")
+    (equal? (my-second ast) '-)
+    (eval-subtraciton ast)
+    )
+   )
+)
+
+(define (eval-subtraciton ast)
+  (println "            eval-subtraciton")
+  (print "                ")
+  (print (my-first ast))
+  (print " - ")
+  (println (my-third ast))
+  (print "                ")
+  (println (- (my-first ast) (my-third ast)))
+  
+  (- (my-first ast) (my-third ast))
+)
+
+(define (multiplication-conditionals ast)
+  (println "        multiplication-conditionals")
+  (and
+   (binary-shape? ast)
+   (and
+    (println "            is *?")
+    (equal? (my-second ast) '*)
+    (eval-multiplicaiton ast)
+    )
+   )
+)
+
+(define (eval-multiplicaiton ast)
+  (println "            eval-multiplicaiton")
+  (print "                ")
+  (print (my-first ast))
+  (print " * ")
+  (println (my-third ast))
+  (print "                ")
+  (println (* (my-first ast) (my-third ast)))
+  
+  (* (my-first ast) (my-third ast))
+)
+
+(define (divizion-conditionals ast)
+  (println "        divizion-conditionals")
+  (and
+   (binary-shape? ast)
+   (and
+    (println "            is /?")
+    (equal? (my-second ast) '/)
+    (eval-divizion ast)
+    )
+   )
+)
+
+(define (eval-divizion ast)
+  (println "            eval-divizion")
+  (print "                ")
+  (print (my-first ast))
+  (print " / ")
+  (println (my-third ast))
+  (print "                ")
+  (println (/ (my-first ast) (my-third ast)))
+  
+  (/ (my-first ast) (my-third ast))
 )
 
 ;; ============================================================
@@ -218,14 +309,16 @@
     ;; if it's bigger than 3 items then we simplofy that using recursion down the line
     ;; when it gets to here it is 3 items
     [
-     (and
-      (binary-shape? ast)
-      (and
-       (println "        is +?")
-       (equal? (my-second ast) '+)
-       (eval-addition ast)
-      )
-     )
+     (adition-conditionals ast)
+    ]
+    [
+     (subtraction-conditionals ast)
+    ]
+    [
+     (multiplication-conditionals ast)
+    ]
+    [
+     (divizion-conditionals ast)
     ]
     ;; TODO: implement type checking
     ;; TODO: implement division by zero check
@@ -295,7 +388,7 @@
 ;;(evaluate-prefix '(! false))
 
 ;;(println "mr.t pa2 grader tests")
-(evaluate-prefix '(1 + 2))
+;;(evaluate-prefix '(1 + 2))
 ;;(evaluate-prefix '(5 - 2))
 ;;(evaluate-prefix '(3 * 4))
-;;(evaluate-prefix '(8 / 2)))
+(evaluate-prefix '(8 / 2))
