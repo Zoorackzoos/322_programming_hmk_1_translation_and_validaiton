@@ -166,111 +166,49 @@
   )
 )
 
+(define (binary-prefix-math-shape? ast)
+  (println "            binary-prefix-math-shape?")
+  (and
+   (arithmetic-op? (my-first ast))
+   (number? (my-second ast))
+   (number? (my-third ast))
+  )
+)
+
 (define (adition-conditionals ast)
   (println "        adition-conditionals")
   (and
-   (binary-shape? ast)
-   (and
-    (number? (my-first ast))
-    (number? (my-third ast))
-    (println "            is +?")
-    (equal? (my-second ast) '+)
-    (eval-addition ast)
-    )
-   )
-)
-
-(define (eval-addition ast)
-  (println "            eval-addition")
-  (print "                ")
-  (print (my-first ast))
-  (print " + ")
-  (println (my-third ast))
-  (print "                ")
-  (println (+ (my-first ast) (my-third ast))) 
-  
-  (+ (my-first ast) (my-third ast))
+   (binary-prefix-math-shape? ast)
+   (equal? (my-first ast) '+)
+   (+ (my-second ast) (my-third ast))
+  )
 )
 
 (define (subtraction-conditionals ast)
   (println "        subtraction-conditionals")
   (and
-   (binary-shape? ast)
-   (and
-    (number? (my-first ast))
-    (number? (my-third ast))
-    (println "            is -?")
-    (equal? (my-second ast) '-)
-    (eval-subtraciton ast)
-    )
-   )
-)
-
-(define (eval-subtraciton ast)
-  (println "            eval-subtraciton")
-  (print "                ")
-  (print (my-first ast))
-  (print " - ")
-  (println (my-third ast))
-  (print "                ")
-  (println (- (my-first ast) (my-third ast)))
-  
-  (- (my-first ast) (my-third ast))
+   (binary-prefix-math-shape? ast)
+   (equal? (my-first ast) '-)
+   (- (my-second ast) (my-third ast))
+  )
 )
 
 (define (multiplication-conditionals ast)
   (println "        multiplication-conditionals")
   (and
-   (binary-shape? ast)
-   (and
-    (number? (my-first ast))
-    (number? (my-third ast))
-    (println "            is *?")
-    (equal? (my-second ast) '*)
-    (eval-multiplicaiton ast)
-    )
-   )
-)
-
-(define (eval-multiplicaiton ast)
-  (println "            eval-multiplicaiton")
-  (print "                ")
-  (print (my-first ast))
-  (print " * ")
-  (println (my-third ast))
-  (print "                ")
-  (println (* (my-first ast) (my-third ast)))
-  
-  (* (my-first ast) (my-third ast))
+   (binary-prefix-math-shape? ast)
+   (equal? (my-first ast) '*)
+   (* (my-second ast) (my-third ast))
+  )
 )
 
 (define (divizion-conditionals ast)
   (println "        divizion-conditionals")
   (and
-   (binary-shape? ast)
-   (and
-    (number? (my-first ast))
-    (and
-     (number? (my-third ast))
-     (not (equal? (my-third ast) 0))
-    )
-    (println "            is /?")
-    (equal? (my-second ast) '/)
-    (eval-divizion ast)
-    )
-   )
-)
-
-(define (eval-divizion ast)
-  (println "            eval-divizion")
-  (print "                ")
-  (print (my-first ast))
-  (print " / ")
-  (println (my-third ast))
-  (print "                ")
-  (println (/ (my-first ast) (my-third ast)))
-  
-  (/ (my-first ast) (my-third ast))
+   (binary-prefix-math-shape? ast)
+   (equal? (my-first ast) '/)
+   (/ (my-second ast) (my-third ast))
+  )
 )
 
 (define (binary-arithmatic-error-conditionals ast)
@@ -630,4 +568,4 @@
 ;; (evaluate-program '(1 / (2 - 2)))
 
 ;; barbismo tests
-(evaluate-program '(1 == true))
+(evaluate-program '(6 / 2))
