@@ -383,6 +383,26 @@
   )
 )
 
+(define (simplify-complicated-prefix ast)
+  (println "        simplify-complicated-prefix")
+   (or
+    (and
+     (list? (my-second ast))
+     (print "            ")
+     (println "1st parameter is a list, Look!")
+     (print "            ")
+     (println (my-second ast))
+    )
+    (and
+     (list? (my-third ast))
+     (print "            ")
+     (println "2nd parameter is a list, Look!")
+     (print "            ")
+     (println (my-third ast))
+    )
+   )
+)
+
 ;; ============================================================
 ;; evaluate-prefix
 ;;
@@ -471,6 +491,7 @@
     [
      (1v1-number-less-than-equal-to-conditional ast)
     ]
+    
     ;;equals and not equals
     [
      (prefix-equal-conditional ast)
@@ -478,6 +499,12 @@
     [
      (prefix-not-equal-conditional ast)
     ]
+
+    ;;recursion zone
+    [
+     (simplify-complicated-prefix ast)
+    ]
+    
     ;; TODO: implement type checking
     ;; ???
     
@@ -552,4 +579,4 @@
 ;; (evaluate-program '(1 / (2 - 2)))
 
 ;; barbismo tests
-(evaluate-program '(true || false))
+(evaluate-program '(1 + 2 * 3))
