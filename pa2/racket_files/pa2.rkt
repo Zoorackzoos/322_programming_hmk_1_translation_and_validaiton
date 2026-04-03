@@ -177,7 +177,6 @@
    (println " 3)")
    (print "                        ")
    (println (>= (length ast) 3))
-   (>= (length ast) 3)
 
    (println "                    (arithmetic-op? (my-first ast))")
    (print "                        ")
@@ -240,6 +239,7 @@
    (binary-prefix-math-shape? ast)
    ;;don't care about effenciy -mr.t
    (not (binary-arthimatic-divide-by-zero-error ast))
+   (not (binary-arthimetic-zero-by-zero ast))
    (equal? (my-first ast) '/)
    (/ (my-second ast) (my-third ast))
   )
@@ -253,6 +253,17 @@
    (equal? (my-first ast) '/)
    (equal? (my-third ast) 0)
     '(err "division by zero")
+  )
+)
+
+(define (binary-arthimetic-zero-by-zero ast)
+  (println "        binary-arthimetic-zero-by-zero")
+  (and
+   (binary-prefix-math-shape? ast)
+   (equal? (my-first ast) '/)
+   (equal? (my-second ast) '0)
+   (equal? (my-third ast) '0)
+   '(err "divizion of zero by 0")
   )
 )
 
@@ -409,26 +420,9 @@
   ;;right side is a list
   ;;both sides are lists
   (cond
-    ;;unary >:-(
     [
      (and
-      (unary-shape? ast)
       (list? (my-second ast))
-      (not (type-error? (my-second ast)))
-      (println "            nested unary moment")
-      (println "            1st parameter is a list, look!")
-      (print "            ")
-      (println (my-second ast))
-      ;;                                    _________________________________
-      (evaluate-prefix (list (my-first ast) (evaluate-prefix (my-second ast))))
-     )
-    ]
-    
-    [
-     (and
-      (not (unary-shape? ast))
-      (list? (my-second ast))
-      (not (type-error? (my-second ast)))
       (println "            1st parameter is a list, look!")
       (print "            ")
       (println (my-second ast))
@@ -438,9 +432,7 @@
     ]
     [
      (and
-      (not (unary-shape? ast))
       (list? (my-third ast))
-      (not (type-error? (my-third ast)))
       (println "            2nd parameter is a list, look!")
       (print "            ")
       (println (my-third ast))
@@ -450,7 +442,6 @@
     ]
     [
      (and
-      (not (unary-shape? ast))
       (list? (my-second ast))
       (list? (my-third ast))
       (println "            both parameters are lists, look!")
@@ -482,13 +473,6 @@
   )
 )
 
-(define (equals-or-not-equals-op? e)
-  (or
-   (equal? e '==)
-   (equal? e '!=)
-  )
-)
-
 (define (type-error-checker ast)
   (println "        type-error-checker")
 
@@ -496,73 +480,6 @@
   
   ;;return value
   (or
-
-   (and
-    (type-error? ast)
-    '(err "type error")
-   )
-
-   (and
-    (div-zero-error? ast)
-    '(err "division by zero")
-   )
-
-    ;;old type error in a unary
-    (and
-     (unary-shape? ast)
-     (type-error? (my-second ast))
-     '(err "type error") 
-    )
-
-    ;;divide by zero unary. i hate unary. 
-    (and
-     (unary-shape? ast)
-     (div-zero-error? (my-second ast))
-     '(err "division by zero")
-    )
-
-    ;;divide by zero binary
-    (and
-     (not (unary-shape? ast))
-     (or
-      (div-zero-error? (my-second ast))
-      (div-zero-error? (my-third ast))
-     )
-     '(err "division by zero")
-    )
-   
-    ;; 1 vr.s type error
-    ;; type error vr.s 1
-    (and
-     (not (unary-shape? ast))
-     (or
-      (type-error? (my-second ast))
-      (type-error? (my-third ast))
-     )
-     '(err "type error")
-    )
-    
-    ;;crappy unary
-    ;; '(! 5) -> '(not 5)
-    ;; '(- true) -> '(-true) <- if it were to happen, and it can't.
-    (and
-     (unary-shape? ast)
-     (or
-      (and
-       ;;'(not 5)
-       (equal? (my-first ast) 'not)
-       (number? (my-second ast))
-       '(err "type error")
-      )
-      (and
-       ;;'(- true)
-       (equal? (my-first ast) '-)
-       (boolean-literal? (my-second ast))
-       '(err "type error")
-      )
-     )
-    )
-    
     ;; numerical 
     ;; '(1 + true) --> '(+ 1 true)
     ;; '(true < false) -> (< true false)
@@ -597,21 +514,13 @@
 
     ;; equals and not equals
     (and
-     (equals-or-not-equals-op? (my-first ast))
+     (prefix-bool-op? (my-first ast))
      (not (unary-shape? ast))
      (not (list? (my-second ast)))
      (not (list? (my-third ast)))
      (or
-      ;; num ==/!= bool
-      (and
-       (number? (my-second ast))
-       (boolean-literal? (my-third ast))
-      )
-      ;; bool ==/!= num
-      (and
-       (boolean-literal? (my-second ast))
-       (number? (my-third ast))
-      )
+      (not (boolean-literal? (my-second ast)))
+      (not (boolean-literal? (my-third ast)))
      )
      '(err "type error")
     )
@@ -681,6 +590,10 @@
     ]
     [
      (divizion-conditionals ast)
+    ]
+    ;;errors with binary arthmatic
+    [
+     (binary-arthimetic-zero-by-zero ast)
     ]
     [
      (binary-arthimatic-divide-by-zero-error ast)
@@ -795,9 +708,4 @@
 ;; (evaluate-program '(1 / (2 - 2)))
 
 ;; barbismo tests
-;;(evaluate-program '(1 + 2))
-;;(evaluate-program '(true < false))
-;;(evaluate-program '(1 + (2 && 3)))
-;;(evaluate-program '(! 5))
-;;(evaluate-program '(0 / 0 / 0 / 0))
-;;(evaluate-program '(2 + 2 + 3 + 3 / 0))
+(evaluate-program '(true < false))
