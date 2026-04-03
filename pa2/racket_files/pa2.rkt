@@ -169,6 +169,37 @@
 (define (binary-prefix-math-shape? ast)
   (println "            binary-prefix-math-shape?")
   (and
+   ;;display
+   ;;first bool
+   (println "                    (>= (length ast) 3)")
+   (print "                        (>= ")
+   (print (length ast))
+   (println " 3)")
+   (print "                        ")
+   (println (>= (length ast) 3))
+
+   (println "                    (arithmetic-op? (my-first ast))")
+   (print "                        ")
+   (println (arithmetic-op? (my-first ast)))
+
+   (println "                    (number? (my-second ast))")
+   (print "                        ")
+   (println (number? (my-second ast)))
+
+   (println "                    (number? (my-third ast))")
+   (print "                        ")
+   (println (number? (my-third ast)))
+   
+   ;;final display
+   (print "                ")
+   (println
+    (and (>= (length ast) 3)
+    (arithmetic-op? (my-first ast))
+    (number? (my-second ast))
+    (number? (my-third ast)))
+   )
+   
+   (>= (length ast) 3)
    (arithmetic-op? (my-first ast))
    (number? (my-second ast))
    (number? (my-third ast))
@@ -418,9 +449,81 @@
       (println (my-second ast))
       (print "            ")
       (println (my-third ast))
+      ;;                                    __________________________________________________________________
       (evaluate-prefix (list (my-first ast) (evaluate-prefix (my-second ast)) (evaluate-prefix (my-third ast))))
      )
     ]
+  )
+)
+
+(define (prefix-bool-op? e)
+  (println "            prefix-bool-op")
+  (or
+   (equal? e 'and)
+   (equal? e 'or)
+  )
+)
+
+(define (numeric-comparison-op? e)
+  (or
+   (equal? e '>)
+   (equal? e '<)
+   (equal? e '>=)
+   (equal? e '<=)
+  )
+)
+
+(define (type-error-checker ast)
+  (println "        type-error-checker")
+
+  ;;display
+  
+  ;;return value
+  (or
+    ;; numerical 
+    ;; '(1 + true) --> '(+ 1 true)
+    ;; '(true < false) -> (< true false)
+    (and
+     (or
+      (arithmetic-op? (my-first ast))
+      (numeric-comparison-op? (my-first ast))
+     )
+     (not (unary-shape? ast))
+     (not (list? (my-second ast)))
+     (not (list? (my-third ast)))
+     (or
+      (not (number? (my-second ast)))
+      (not (number? (my-third ast)))
+     )
+     '(err "type error")
+    )
+
+    ;; boolean
+    ;; '(1 && 2)
+    (and
+     (prefix-bool-op? (my-first ast))
+     (not (unary-shape? ast))
+     (not (list? (my-second ast)))
+     (not (list? (my-third ast)))
+     (or
+      (not (boolean-literal? (my-second ast)))
+      (not (boolean-literal? (my-third ast)))
+     )
+     '(err "type error")
+    )
+
+    ;; equals and not equals
+    (and
+     (prefix-bool-op? (my-first ast))
+     (not (unary-shape? ast))
+     (not (list? (my-second ast)))
+     (not (list? (my-third ast)))
+     (or
+      (not (boolean-literal? (my-second ast)))
+      (not (boolean-literal? (my-third ast)))
+     )
+     '(err "type error")
+    )
   )
 )
 
@@ -448,6 +551,11 @@
     [(number? ast) ast]
     [(equal? ast 'true) 'true]
     [(equal? ast 'false) 'false]
+
+    ;; type errors
+    [
+     (type-error-checker ast)
+    ]
 
     ;; TODO: handle unary operators
 
@@ -600,4 +708,4 @@
 ;; (evaluate-program '(1 / (2 - 2)))
 
 ;; barbismo tests
-(evaluate-program '(1 + true))
+(evaluate-program '(true < false))
