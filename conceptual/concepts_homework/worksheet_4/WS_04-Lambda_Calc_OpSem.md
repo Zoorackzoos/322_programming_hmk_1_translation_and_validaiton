@@ -28,26 +28,19 @@ they're like variables, i guess :-/
 in the previous problems the \l functions were either overwritten or duplicates didn't exist in the first place.  
     not like I remember -_-
 plug in the right \ly1. and it's buddies for x2
-  ____                                                                            _
 ( \ly.( ( \ly1.( \lx1. ( y1 z x1 ) ) ) ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) ) )
-    this is a confusing move. just watch.
-plug in \lz1. and it's buddies for y1
-( \ly.( \lx1.( ( \lz1.( ( \ly1.( \lx1.( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
-plug in z for z1
-( \ly.( \lx1.( \ly1.( \lx1.( y1 z x1 ) ) y z ) x1 ) )
-plug in x1 for y
-( \lx1.( \ly1.( \lx1.( y1 z x1 ) ) x1 z ) )
+plug in the rightward piece for y1
+( \ly.( \lx1. ( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
+can't plug into y because it's out of scope
+plug in y for x1
+( \ly.( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z y ) ) ) z1 ) ) z x1 ) )
+plug in z for y
+( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z z ) ) ) z1 ) ) x1 )
+plug in x1 for z1
+( ( \ly1. ( \lx1. ( y1 z z ) ) ) x1 )
 plug in x1 for y1
-    we're doing inner \b reduction here, not outer.
-    double x1 i wonder what that does 0_0
-( \lx1.( \lx1.( x1 z x1 ) ) z )
-    plug in z into x1, both of them? ok :P
-( \lx1.( z z z ) )
-    plug in null for x1
-    nothing?
-nothing?
-    there's no x1 to chew up? 
-    i'm confused.
+( \lx1. ( x1 z z ) )
+
 
 2\. Shadowing and Scope 
 
