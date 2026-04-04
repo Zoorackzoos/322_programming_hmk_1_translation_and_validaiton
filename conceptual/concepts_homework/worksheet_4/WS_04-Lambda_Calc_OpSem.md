@@ -28,18 +28,11 @@ they're like variables, i guess :-/
 in the previous problems the \l functions were either overwritten or duplicates didn't exist in the first place.  
     not like I remember -_-
 plug in the right \ly1. and it's buddies for x2
-( \ly.( ( \ly1.( \lx1. ( y1 z x1 ) ) ) ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) ) )
+( \ly. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) ) )
 plug in the rightward piece for y1
-( \ly.( \lx1. ( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
-can't plug into y because it's out of scope
-plug in y for x1
-( \ly.( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z y ) ) ) z1 ) ) z x1 ) )
-plug in z for y
-( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z z ) ) ) z1 ) ) x1 )
-plug in x1 for z1
-( ( \ly1. ( \lx1. ( y1 z z ) ) ) x1 )
-plug in x1 for y1
-( \lx1. ( x1 z z ) )
+( \ly. ( \lx1. ( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
+
+
 
 
 2\. Shadowing and Scope 
