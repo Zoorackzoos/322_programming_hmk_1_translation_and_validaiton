@@ -23,21 +23,32 @@ rephrase into a duncan formatted lambda calculus question
 ( \lx.( \ly.( x ( \lz. ( x y z ) ) ) ) ) ( \ly. ( \lx. ( y z x ) ) )
 do \a renaming
 ( \lx2.( \ly.( x2 ( \lz1. ( x2 y z1 ) ) ) ) ) ( \ly1. ( \lx1. ( y1 z x1 ) ) )
-plug in \ly1 and it's buddies for both \lx2
-( \ly. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) ) )
-cannot plug var into y. no var present.
-plug in \lz1 and it's buddies for \ly1
-( \ly. ( \lx1. ( ( \lz1. ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
-cannot plug var into x1. no var present.
+plug in right side for x2
+  _____        __                             _______________________________
+( \lx2.( \ly.( x2 ( \lz1. ( x2 y z1 ) ) ) ) ) ( \ly1. ( \lx1. ( y1 z x1 ) ) )
+-->
+( \ly.( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) ( \lz1.( ( \ly1.( \lx1.( y1 z x1 ) ) ) y z1 ) ) ) )
+cannot plug var into \ly. no var present. go to \ly1.
+plug in \lz1 for y1
+( \ly. ( \lx1. ( ( \lz1. ( ( \ly1.( \lx1.( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
+cannot plug var into \lx1. no var present go to \lz1.
 plug in z for z1
-( \ly. ( \lx1. ( ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z ) ) x1 ) )
-plug in x1 into x1
-( \ly. ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z )
-
-
-
-
-
+                   _____                                   __     _
+( \ly. ( \lx1. ( ( \lz1. ( ( \ly1.( \lx1.( y1 z x1 ) ) ) y z1 ) ) z x1 ) ) )
+-->
+( \ly. ( \lx1. ( ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z ) x1 ) ) )
+plug in y for y1
+                     _____           __            _
+( \ly. ( \lx1. ( ( ( \ly1. ( \lx1. ( y1 z x1 ) ) ) y z ) x1 ) ) )
+-->
+( \ly. ( \lx1. ( ( ( \lx1. ( y z x1 ) ) z ) x1 ) ) )
+plug in z for \lx1.
+                     _____       __     _
+( \ly. ( \lx1. ( ( ( \lx1. ( y z x1 ) ) z ) x1 ) ) )
+-->
+( \ly. ( \lx1. ( ( y z z ) x1 ) ) )
+this problem has more memes that make it harder than traditional plug and play lambda calculus problems
+for here, you have to see if substitution is possible.
 
 
 2\. Shadowing and Scope 
