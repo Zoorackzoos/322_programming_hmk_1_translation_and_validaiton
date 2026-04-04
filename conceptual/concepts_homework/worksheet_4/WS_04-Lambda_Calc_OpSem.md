@@ -57,20 +57,30 @@ convert this into a duncan lambda calculus question
 ( ( \lx. ( \ly. ( x ( \ly. ( x y ) ) ) ) ) ( \lz. ( y z ) ) ) x
 \a renaming time :-DDD
 ( ( \lx1. ( \ly. ( x1 ( \ly1. ( x1 y1 ) ) ) ) ) ( \lz. ( y z ) ) ) x
-plug in x for z on the very right
-                                                  ____     _       _
+plug in \lz. and it's buddies for x1
+    _____          __           __              __________________
 ( ( \lx1. ( \ly. ( x1 ( \ly1. ( x1 y1 ) ) ) ) ) ( \lz. ( y z ) ) ) x
 -->
-( ( \lx1. ( \ly. ( x1 ( \ly1. ( x1 y1 ) ) ) ) ) ( y x ) )
-plug in ( y x ) for x1
-    _____          __           __              ______
-( ( \lx1. ( \ly. ( x1 ( \ly1. ( x1 y1 ) ) ) ) ) ( y x ) )
+( \ly. ( ( \lz. ( y z ) ) ( \ly1. ( ( \lz. ( y z ) ) y1 ) ) ) ) x
+plug in x for y
+  ____            _                          _                  _
+( \ly. ( ( \lz. ( y z ) ) ( \ly1. ( ( \lz. ( y z ) ) y1 ) ) ) ) x
 -->
-( \ly. ( ( y x ) ( \ly1. ( ( y x ) y1 ) ) ) )
-cannot plug in var for y, no var available.
-cannot plug in var for y1, no var available.
-uhm. did i do something wrong?
-
+( \lz. ( x z ) ) ( \ly1. ( ( \lz. ( x z ) ) y1 ) )
+plug in \ly1 and it's buddies for z
+  ____     _     _________________________________
+( \lz. ( x z ) ) ( \ly1. ( ( \lz. ( x z ) ) y1 ) )
+-->
+( x ( \ly1. ( ( \lz. ( x z ) ) y1 ) ) )
+cannot plug var into x, not a \l function.
+cannot plug var into y1, no var available.
+plug in y1 for z
+                ____     _     __
+( x ( \ly1. ( ( \lz. ( x z ) ) y1 ) ) )
+-->
+( x ( \ly1. ( x y1 ) ) )
+cannot plug var in for y1, no var available.
+seems like that's the end.
 
 
 3\. Function Composition with Free Variables 
