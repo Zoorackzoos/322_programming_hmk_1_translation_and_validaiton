@@ -184,15 +184,114 @@
         \]
 
         \begin{markdown}
-            I'll start with the evaluation 1st, then the "formal definition"
-            crap that looks like a bacterium crawling on your screen.
-
             convert this into a duncan friendly question. That's my name btw.
             ( ( var ( x 5 ) ( var ( y ( if ( gt x 3 ) ( + x 2 ) 0 ) )
             ( var ( x ( + y 1 ) ) ( + x y ) ) ) ) , p )
 
+            ___________
+            ( ( var ( x 5 ) ( var ( y ( if ( gt x 3 ) ( + x 2 ) 0 ) )
+            ( var ( x ( + y 1 ) ) ( + x y ) ) ) ) , p )
+            evaluate y
+            x = 5
+            "new environment"
+            p1 = p[x --> 5]
 
+            _______________________________________
+            ( ( var ( x 5 ) ( var ( y ( if ( gt x 3 ) ( + x 2 ) 0 ) )
+            ( var ( x ( + y 1 ) ) ( + x y ) ) ) ) , p )
+            evaluate y.
+            that var declaration is surrounded by a () which makes a awkward connection
+            to the other rightward var declaration. just ignore it :-3
+            y = ( if ( gt x 3 ) ( + x 2 ) 0 )
+            ( gt x 3 )
+            x > 3
+            5 > 3
+            true
+            ( if true ( + x 2 ) 0 )
+            that 0, is the otherwise condition i think.
+            so if the "gt x 3" weren't true then y = 0.
+            + x 2
+            + 5 2
+            y = 7
+            "new environment"
+            p2 = p1[y = 7]
+
+
+
+
+
+
+
+
+
+
+
+
+            ( ( var ( x 5 ) ( var ( y ( if ( gt x 3 ) ( + x 2 ) 0 ) )
+            _____________________
+            ( var ( x ( + y 1 ) ) ( + x y ) ) ) ) , p )
+            evaluate x, 2nd time
+            x = ( + y 1 )
+            ( + 7 1 )
+            x = 8
+            "new environment"
+            p3 = p2[x = 8]
+
+            ( ( var ( x 5 ) ( var ( y ( if ( gt x 3 ) ( + x 2 ) 0 ) )
+            _________
+            ( var ( x ( + y 1 ) ) ( + x y ) ) ) ) , p )
+            + x y
+            + 7 y
+            + 7 8
+            15
+
+            ( ( var ( x 5 ) ( var ( y ( if ( gt x 3 ) ( + x 2 ) 0 ) )
+            _
+            ( var ( x ( + y 1 ) ) ( + x y ) ) ) ) , p )
+            i'm going to assume that "p" means "execute the program bro".
+            when we do it turns into 15.
+
+            now i'll show you the "formal evaluation". it looks like a tumor.
         \end{markdown}
+
+        \begin{math}
+            \rho_3 = \rho[ \ x\xrightarrow{}8 \ ,\  y \xrightarrow{}7 \ ]
+            \\
+        \end{math}
+
+        \begin{math}
+            \frac
+            {
+                \frac
+                {<5> \ \downarrow \ 5}
+                {<var ( x \ 5 )> \ \downarrow \ 5}
+                \frac
+                {
+                    \frac
+                    {<x> \ \downarrow \ 5}
+                    {<(gt \ x \ 3)> \ \downarrow \ true}
+                    \frac
+                    {<x> \ \downarrow \ 5}
+                    {<(+ \ x \ 2)> \ \downarrow \ 7}
+                }
+                {<var ( y \ ( if \ (gt \ x \ 3) (+ \ x \ 2) \ 0 \ ) \ )> \ \downarrow \ 7}
+                \frac
+                {
+                    \frac
+                    {<y> \ \downarrow \ 7}
+                    {<+ \ y \ 1> \ \downarrow \ 8}
+                }
+                {<var (x \ ( \ + \ y \ 1) \ )> \ \downarrow \ 8}
+                \frac
+                {<x> \ \downarrow \ 7 \ \ \ <y> \ \downarrow \ 8}
+                {<+ \ x \ y> \ \downarrow \ 15}
+            }
+            {
+                \langle (var\ (x\ 5)\ (var\ (y\ (if\ (gt\ x\ 3)\ (+\ x\ 2)\ 0))\ (var\ (x\ (+\ y\ 1))\ (+\ x\ y)))),\ \rho \rangle \
+            \downarrow \
+            15
+            }
+        \end{math}
 
         \vspace{3in}
 
