@@ -347,14 +347,19 @@
         \end{math}
 
         \[
-            \frac
-            {
-                <eq \ 1 \ 1> \ \downarrow \ true \ \ \
-            \frac
-            {<x, p1> \ \downarrow \ true}
-            {<(if\ x\ (+\ x\ 1)\ 5)> \ \downarrow \ type \ error}
+            \frac{
+                \langle (eq\ 1\ 1),\ \rho \rangle \Downarrow true
+                \quad
+                \frac{
+                    \langle true,\ \rho \rangle \Downarrow true
+                    \quad
+                    \text{no rule applies to } (+\ true\ 1)
+                }{
+                    \langle (var\ (x\ true)\ (if\ x\ (+\ x\ 1)\ 5)),\ \rho \rangle \ \text{stuck}
+                }
+            }{
+                \langle (if\ (eq\ 1\ 1)\ (var\ (x\ true)\ (if\ x\ (+\ x\ 1)\ 5))\ 0),\ \rho \rangle \ \text{stuck}
             }
-            {< \langle (if\ (eq\ 1\ 1)\ (var\ (x\ true)\ (if\ x\ (+\ x\ 1)\ 5))\ 0),\ \rho \rangle > \ \downarrow \ type \ error}
         \]
 
         \vspace{3in}
@@ -423,6 +428,10 @@
             formal irradiation now.
         \end{markdown}
 
+        \begin{math}
+            \rho_1 = \rho_0[a \mapsto 5]
+        \end{math}
+
         \[
             \frac
             {
@@ -430,38 +439,37 @@
                 {
                     \frac
                     {
-                        <b \ , \ p_0>\ \xrightarrow{} \ 10
+                        <b \ , \ p_0>\ \downarrow \ 5
                     \ \ \
-                        <a \ , \ p_0> \ \xrightarrow{} \ 5
+                        <a \ , \ p_0> \ \downarrow \ 10
                     }
-                    {<(lt\ b\ a)> \ \xrightarrow{} \ true}
+                    {<(lt\ b\ a)> \ \downarrow \ true}
                     \frac
                     {
                         \frac
                         {
-                            <b \ , \ p_0>\ \xrightarrow{} \ 10
+                            <b \ , \ p_0>\ \downarrow \ 5
                         \ \ \
-                            <a \ , \ p_0> \ \xrightarrow{} \ 5
+                            <a \ , \ p_0> \ \downarrow \ 10
                         }
-                        {<(-\ a\ b)> \ \xrightarrow{} \ 5}
+                        {<(-\ a\ b)> \ \downarrow \ 5}
                     }
-                    {<(eq\ (-\ a\ b)\ 5)> \ \xrightarrow{} \ true}
+                    {<(eq\ (-\ a\ b)\ 5)> \ \downarrow \ true}
                 }
                 {
-                    <(and\ (lt\ b\ a)\ (eq\ (-\ a\ b)\ 5))> \ \xrightarrow{} \ true
+                    <(and\ (lt\ b\ a)\ (eq\ (-\ a\ b)\ 5))> \ \downarrow \ true
                 }
                 \frac
                 {
+                    <b \ , \ p_0> \ \downarrow \ 5
+                \ \ \
                     \frac
-                    {<a , p_0> \ \xrightarrow{} \ 5}
-                    {<p_1 \ , \ a> \ \xrightarrow{} \ p_1[a = 5]}
-                    \frac
-                    {<p_1 , a>\ \xrightarrow{} \ 5 \ \ \ <p_0 , b> \ \xrightarrow{} \ 5}
-                    {<(+\ a\ b)> \ \xrightarrow{} \ 10}
+                    {<a , p_1>\ \downarrow \ 5 \ \ \ <b , p_1> \ \downarrow \ 5}
+                    {<(+\ a\ b) \ , \ p_1> \ \downarrow \ 10}
                 }
-                {<(var\ (a\ b)\ (+\ a\ b))> \ \downarrow \ 10}
+                {<(var\ (a\ b)\ (+\ a\ b), \ p_0)> \ \downarrow \ 10}
             }
-            {\langle (if\ (and\ (lt\ b\ a)\ (eq\ (-\ a\ b)\ 5))\ (var\ (a\ b)\ (+\ a\ b))\ 0),\ \rho_0 \rangle \ \xrightarrow{} \ 10}
+            {\langle (if\ (and\ (lt\ b\ a)\ (eq\ (-\ a\ b)\ 5))\ (var\ (a\ b)\ (+\ a\ b))\ 0),\ \rho_0 \rangle \ \downarrow \ 10}
         \]
 
     \end{enumerate}
