@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{markdown}
+
+\title{322 - worksheet 4 small}
+\author{Shwifty MemeLord}
+\date{April 2026}
+
+\begin{document}
+
+    \maketitle
+
+    \section{hello lol}
+
+    this is part LaTex & part markdown.
+
+    \begin{markdown}
+        < ( var (x 3) var (y 4) (fun ( f (z) ) (if (gt z x) (+ z y) (- z y) ) ) , p >
+        ( var (x 10) (apply (f (5) ) ) ) )
+
+        "non-formal evaluation"
+            _________
+        < ( var (x 3) var (y 4) (fun ( f (z) ) (if (gt z x) (+ z y) (- z y) ) ) , p >
+        x = 3
+        "new environment"
+        p1 = p[x --> 3]
+
+                      _________
+        < ( var (x 3) var (y 4) (fun ( f (z) ) (if (gt z x) (+ z y) (- z y) ) ) , p >
+        y = 4
+        "new environment"
+        p2 = p[y --> 4]
+
+                                  ______________________________________________
+        < ( ( var (x 3) var (y 4) (fun ( f (z) ) (if (gt z x) (+ z y) (- z y) ) ) , p >
+
+
+        p1 = 3
+        p2 = 4
+        p = [ x = 3 , y = 4]
+
+    \end{markdown}
+
+\end{document}
