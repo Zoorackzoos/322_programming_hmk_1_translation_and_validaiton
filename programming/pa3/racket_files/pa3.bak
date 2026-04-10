@@ -26,7 +26,7 @@
 ;; ============================================================
 
 ;; ============================================================
-;; Name: Duncan Holmes
+;; Name: TODO
 ;; ============================================================
 
 
@@ -52,46 +52,7 @@
 ;;   implement this function
 ;; ============================================================
 (define (lookup-env var env)
-  ;;display 
-  (println "lookup-env")
-  (print "    ")
-  (println var)
-  (println "    ")
-  (println env)
-  
-  ;;(lookup-env 'x '((x 5) (y 10))) => 5
-  ;;i'll jsut treat the var name like a string. idk :-/
-  ;;i will iterate thru the list recursively
-  ;;i can't fuck with the signature so i'll do a cheecky move
-  (parse-list-given-var var env 0)
-)
-
-(define (parse-list-given-var var env iterator)
-  ;;display
-  (println "    parse-list-given-var")
-  (print "        ")
-  (println var)
-  (print "        ")
-  (println env)
-  (print "        ")
-  (println iterator)
-
-  (if
-   (or;;conditional
-    (binary-op? var)
-    (literal? var)
-   )
-   (begin;;if yes
-     (println "        var is a operation or a literal. Not cool bro")
-     #f
-   )
-   (begin;;if no
-     (println "        var is a string, so it's a real var. Yay :D")
-     #t
-   )
-  )
-)
-
+  'todo)
 
 ;; ============================================================
 ;; extend-env
@@ -141,8 +102,7 @@
 ;;   You may reuse evaluation helpers from PA2.
 ;; ============================================================
 (define (evaluate-with-env e env)
-  'todo
-)
+  'todo)
 
 
 ;; ============================================================
@@ -151,20 +111,19 @@
 ;; You may add more tests as you work.
 ;; ============================================================
 
-;;mr.t test cases
 ;; environment tests
 (lookup-env 'x '((x 5) (y 10)))
-;;(lookup-env 'z '((x 5) (y 10)))
-;;(extend-env 'x 5 '())
+(lookup-env 'z '((x 5) (y 10)))
+(extend-env 'x 5 '())
 
 ;; evaluation tests
-;;(evaluate-with-env '(1 + 2) '())
-;;(evaluate-with-env 'x '((x 5)))
-;;(evaluate-with-env '(x + 1) '((x 5)))
-;;(evaluate-with-env '(var (x 5) x) '())
-;;(evaluate-with-env '(var (x (1 + 2)) (x * 3)) '())
-;;(evaluate-with-env '(var (x 5) (var (y 10) (x + y))) '())
+(evaluate-with-env '(1 + 2) '())
+(evaluate-with-env 'x '((x 5)))
+(evaluate-with-env '(x + 1) '((x 5)))
+(evaluate-with-env '(var (x 5) x) '())
+(evaluate-with-env '(var (x (1 + 2)) (x * 3)) '())
+(evaluate-with-env '(var (x 5) (var (y 10) (x + y))) '())
 
 ;; error tests
-;;(evaluate-with-env 'x '())
-;;(evaluate-with-env '(var (x 5) (y + 1)) '())
+(evaluate-with-env 'x '())
+(evaluate-with-env '(var (x 5) (y + 1)) '())
