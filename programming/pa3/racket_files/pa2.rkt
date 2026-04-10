@@ -415,7 +415,12 @@
 )
 
 (define (simplify-complicated-prefix ast)
+  ;;display
   (println "        simplify-complicated-prefix")
+  (print "            ")
+  (println ast)
+
+  ;;work
   (cond
     [
      (and
@@ -488,12 +493,17 @@
 )
 
 (define (type-error-checker ast)
-  (println "        type-error-checker")
-
   ;;display
+  (println "        type-error-checker")
+  (print "            ")
+  (println ast)
   
-  ;;return value
+  ;;work
   (or
+    (and
+     (any-error? ast)
+    )
+   
     ;; numerical 
     ;; '(1 + true) --> '(+ 1 true)
     ;; '(true < false) -> (< true false)
@@ -565,8 +575,8 @@
 ;; ============================================================
 
 (define (evaluate-prefix ast)
-  (println "    evaluate-prefix")
-  (print "   ")
+  (println "evaluate-prefix")
+  (print "    ")
   (println ast)
   
   (cond
@@ -574,6 +584,8 @@
     [(number? ast) ast]
     [(equal? ast 'true) 'true]
     [(equal? ast 'false) 'false]
+
+    
 
     ;; type errors
     [
@@ -722,7 +734,7 @@
 ;; You may add more tests as you work.
 ;; ============================================================
 
-;;(println "Mr T test cases")
+;;(println "Mr T test cases") 
 ;;(evaluate-program 5)
 ;; (evaluate-program '(1 + 2))
 ;; (evaluate-program '(1 + 2 * 3))
@@ -731,4 +743,15 @@
 ;; (evaluate-program '(1 / (2 - 2)))
 
 ;; barbismo tests
-(evaluate-program '(! (1 + true)))
+;;(evaluate-program '(! (1 + true)))
+
+
+
+
+
+
+
+
+
+
+

@@ -275,13 +275,6 @@
   )
 )
 
-(define (duncan-is-literal? x)
-  (or
-   (weird-boolean-literal? x)
-   (literal? x)
-  )
-)
-
 (define (lowest-precedence-position list iterator index_of_lowest_precedent)
  ;;(println list)
  ;;(println iterator)
@@ -325,7 +318,6 @@
 
 (define (is-string? e)
   (and
-   (not (duncan-is-literal? e))
    (not (binary-op? e))
    (not (unary-op? e))
    (not (list? e))
@@ -350,6 +342,42 @@
   (cond
    [ (equal? e '!) 'not ]
    [ else e ]
+  )
+)
+
+;; ============================================================
+;; pa3 helper funcitons
+;; ============================================================
+
+(define (reserved-keyword? s)
+  (cond
+    [(equal? s '+)   #t]
+    [(equal? s '-)   #t]
+    [(equal? s '*)   #t]
+    [(equal? s '/)   #t]
+    [(equal? s 'true)  #t]
+    [(equal? s 'false) #t]
+    [(equal? s 'var)   #t]
+    [(equal? s 'and)   #t]
+    [(equal? s 'or)    #t]
+    [(equal? s 'not)   #t]
+    [(equal? s '<)   #t]
+    [(equal? s '<=)  #t]
+    [(equal? s '>)   #t]
+    [(equal? s '>=)  #t]
+    [(equal? s '==)  #t]
+    [(equal? s '!=)  #t]
+    [(equal? s '&&)  #t]
+    [(equal? s '||)  #t]
+    [(equal? s '!)   #t]
+    [else #f]
+  )
+)
+
+(define (variable? s)
+  (and
+   (symbol? s)
+   (not (reserved-keyword? s))
   )
 )
 
@@ -379,8 +407,7 @@
   (println e)
 
   ;;work
-  (
-   cond
+  (cond
     [
      (and
       (null? e)
@@ -389,15 +416,7 @@
       #t
      )
     ]
-    [
-     ;;TODO: remove duncan literals
-     (and
-      (duncan-is-literal? e)
-      (println "    is a duncan literal. you should probably remove this later")
-      (println "    valid")
-      #t
-     )
-    ]
+
     [
      (and
       (binary-op? e)
@@ -406,12 +425,48 @@
       e
      )
     ]
+
+    ;; pa3: valid variable
+    [
+     (variable? e)
+     (and
+      (println "    valid variable")
+      #t
+     )
+    ]
+
+    ;; pa3: unknown bare symbol (reserved keyword used as value, or typo)
+    [
+     (symbol? e)
+     (and
+      (println "    invalid bare symbol")
+      e
+     )
+    ]
+
+    ;; pa3: var binding shape
     [
      (and
-      (println "    recursion activated")
-     (list? e)
-      (
-       cond
+      (println "    var in binding shape ?")
+      (list? e)
+      (= (length e) 3)
+      (equal? (car e) 'var)
+      (list? (my-second e))
+      (= (length (my-second e)) 2)
+      (variable? (car (my-second e)))
+     )
+     (and
+      (println "    var binding")
+      (eq? #t (validate-program (my-second (my-second e))))
+      (eq? #t (validate-program (my-third e)))
+     )
+    ]
+
+    [
+     (and
+      (println "    unknowable bools activated")
+      (list? e)
+      (cond
         [
          (and
           (println "        unary shape in recursion")
@@ -422,41 +477,55 @@
         [
          (and
           (println "        single element left ?")
-          (= (length e) 1);; single element left, check it's a valid value
-          (if (or
-               (duncan-is-literal? (car e))
-               (list? (car e))
-              )
-            #t      ;; yes_condition
-            (car e) ;; no_condtion
+          (= (length e) 1)
+          (if
+           (or;;conditional
+            (literal? (car e))
+            (list? (car e))
+           )
+            #t;;if yes
+            (car e);;if no
           )
          )
         ]
         [
-         (< (length e) 3) ;; length 2 is always malformed
+         (and
+          (println "        e.size > 3 ?")
+          (< (length e) 3)
           (car e)
-        ]
-        [
-         (not (binary-op? (my-second e)))
-          (my-second e)
-        ]
-        [
-         (and (> (length e) 3)
-              (non-associative-op? (my-second e))
          )
-          (my-second (cddr e))  ;; return the NEXT operator as the offender
+        ]
+        [
+         (and
+          (println "        (not (binary-op? (my-second e)))")
+          (not (binary-op? (my-second e)))
+          (my-second e)
+         )
+        ]
+        [
+         (and
+          (println "        big e and non-associativty")
+          (and
+           (> (length e) 3)
+           (non-associative-op? (my-second e))
+          )
+          (my-second (cddr e))
+         )
         ]
         [
          else
+         (and
+          (println "        recursion in e")
           (validate-program (cddr e))
+         )
         ]
       )
      )
     ]
-    [
-     else
+
+    [else
      (and
-      (println "    else funciton reached")
+      (println "    else function reached")
       #t
      )
     ]
@@ -492,7 +561,7 @@
    
   ;; literal values
   [
-   (duncan-is-literal? e)
+   (literal? e)
    (translate-weird-bools e)
   ]
 
@@ -525,10 +594,10 @@
 )
 
 ;;test cases
-(validate-program 'x)
-(validate-program 'y)
-(validate-program '(var (x 1) x))
-
+;;(validate-program 'x)
+;;(validate-program 'y)
+;;(validate-program '(var (x 1) x))
+;;(validate-program '(! (1 + true)))
 
 
 
