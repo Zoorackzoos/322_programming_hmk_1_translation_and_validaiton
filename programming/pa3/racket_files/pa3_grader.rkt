@@ -1,4 +1,8 @@
 #lang racket
+(provide (all-defined-out))
+(require "pa1.rkt")
+(require "pa2.rkt")
+(require "pa3.rkt")
 
 ;; ================================================================
 ;; CSCE 322 - PA3 Auto-Grader
