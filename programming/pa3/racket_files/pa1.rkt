@@ -408,28 +408,21 @@
     ]
     [
      (and
-      (not (list? e))
-      (println "    this is a list.")
-      (println "    not valid")
-      e
-     )
-    ]
-    [
-      (not (equal? (contains-string? e 0 (length e)) #f))
-      (contains-string? e 0 (length e))
-      (println "    line 419. idk twin")
-    ]
-    [
-     (println "    recursion activated")
+      (println "    recursion activated")
      (list? e)
       (
        cond
         [
-         (unary-shape? e)
+         (and
+          (println "        unary shape in recursion")
+          (unary-shape? e)
           #t
+         )
         ]
         [
-         (= (length e) 1);; single element left, check it's a valid value
+         (and
+          (println "        single element left ?")
+          (= (length e) 1);; single element left, check it's a valid value
           (if (or
                (duncan-is-literal? (car e))
                (list? (car e))
@@ -437,6 +430,7 @@
             #t      ;; yes_condition
             (car e) ;; no_condtion
           )
+         )
         ]
         [
          (< (length e) 3) ;; length 2 is always malformed
@@ -457,11 +451,12 @@
           (validate-program (cddr e))
         ]
       )
+     )
     ]
     [
      else
      (and
-      (println "else funciton reached")
+      (println "    else funciton reached")
       #t
      )
     ]
@@ -531,8 +526,8 @@
 
 ;;test cases
 (validate-program 'x)
-
-
+(validate-program 'y)
+(validate-program '(var (x 1) x))
 
 
 
