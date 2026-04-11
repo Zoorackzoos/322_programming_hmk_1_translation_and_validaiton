@@ -447,7 +447,7 @@
     ;; pa3: var binding shape
     [
      (and
-      (println "    var in binding shape ?")
+      ;;(println "    var in binding shape ?")
       (list? e)
       (= (length e) 3)
       (equal? (car e) 'var)
@@ -456,7 +456,7 @@
       (variable? (car (my-second e)))
      )
      (and
-      (println "    var binding")
+      (println "    var binding confirmed")
       (eq? #t (validate-program (my-second (my-second e))))
       (eq? #t (validate-program (my-third e)))
      )
@@ -471,7 +471,14 @@
          (and
           (println "        unary shape in recursion")
           (unary-shape? e)
-          #t
+         )
+        ]
+        [
+         (and
+          (println "        binary shape & both elements aren't a list")
+          (binary-shape? e)
+          (not (list? (my-first e)))
+          (not (list? (my-third e)))
          )
         ]
         [
@@ -558,6 +565,19 @@
   [
    (not (equal? (validate-program e) #t)) (list 'err (validate-program e))
   ]
+
+  ;; pa3: variable passes through unchanged
+  [(variable? e) e]
+
+  ;; pa3: var binding
+  [(and (list? e)
+        (= (length e) 3)
+        (equal? (car e) 'var))
+   (list 'var
+         (list (car (my-second e))
+               (infix->prefix (my-second (my-second e))))
+         (infix->prefix (my-third e)))
+  ]
    
   ;; literal values
   [
@@ -598,7 +618,7 @@
 ;;(validate-program 'y)
 ;;(validate-program '(var (x 1) x))
 ;;(validate-program '(! (1 + true)))
-
+(validate-program '(var (x 1) (var (y 2) (x + y))))
 
 
 

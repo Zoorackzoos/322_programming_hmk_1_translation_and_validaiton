@@ -48,12 +48,16 @@
   (set! student-evaluate-with-env
     (with-handlers ([exn:fail? (lambda (e) #f)])
       (dynamic-require submission-path 'evaluate-with-env)))
-  (set! student-validate-program
-    (with-handlers ([exn:fail? (lambda (e) #f)])
-      (dynamic-require submission-path 'validate-program)))
-  (set! student-infix->prefix
-    (with-handlers ([exn:fail? (lambda (e) #f)])
-      (dynamic-require submission-path 'infix->prefix))))
+
+(define pa1-path
+  (build-path (path-only submission-path) "pa1.rkt"))
+
+(set! student-validate-program
+  (with-handlers ([exn:fail? (lambda (e) #f)])
+    (dynamic-require pa1-path 'validate-program)))
+(set! student-infix->prefix
+  (with-handlers ([exn:fail? (lambda (e) #f)])
+    (dynamic-require pa1-path 'infix->prefix))))
 
 ;; ================================================================
 ;; Test infrastructure
