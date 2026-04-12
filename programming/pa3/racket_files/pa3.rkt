@@ -141,10 +141,18 @@
 
   ;;work
   (cond
+    [
+     (and
+      (println "        previous free var error ?")
+      (equal? e '(err "free variable"))
+     )
+     '(err "free variable")
+    ]
+    
     ;;jackass single variable ahh input
     [
      (and
-      (println "        jackass single variable ahh input")
+      (println "        jackass single variable ahh input ?")
       (not (list? e))
       (variable? e)
       (duncan-lookup-env e env 0)
@@ -154,6 +162,7 @@
     ;;declare a var in the input
     [
      (and
+      (println "        are you making a var ?")
       (equal? (my-first e) 'var)
       (println "        you made a var. what the hell bro.")
       (prefixed-eval-with-env (my-third e) (append (list (my-second e)) env))
@@ -162,26 +171,43 @@
 
     ;;one of the elemetns is a bastard list
     [
-     (list? (my-second e))
-     (prefixed-eval-with-env (list (my-first e) (prefixed-eval-with-env (my-second e) env) (my-third e)) env)
+     (and
+      (println "        is my-second a list ?")
+      (not (equal? (my-second e) '(err "free variable")))
+      (list? (my-second e))
+      (prefixed-eval-with-env (list (my-first e) (prefixed-eval-with-env (my-second e) env) (my-third e)) env)
+     )
     ]
     [
-     (list? (my-second e))
-     (prefixed-eval-with-env (list (my-first e) (my-second e) (prefixed-eval-with-env (my-third e)) env) env)
+     (and
+      (println "        is my-third a list ?")
+      (not (equal? (my-third e) '(err "free variable")))
+      (list? (my-third e))
+      (prefixed-eval-with-env (list (my-first e) (my-second e) (prefixed-eval-with-env (my-third e)) env) env)
+     )
     ]
     
     ;;left or right is a variable
     [
-     (variable? (my-second e))
-     (prefixed-eval-with-env (list (my-first e) (duncan-lookup-env (my-second e) env 0) (my-third e)) env)
+     (and
+      (println "        is my-second a var that's env-ed ?")
+      (not (equal? (my-second e) '(err "free variable")))
+      (variable? (my-second e))
+      (prefixed-eval-with-env (list (my-first e) (duncan-lookup-env (my-second e) env 0) (my-third e)) env)
+     )
     ]
     [
-     (variable? (my-third e))
-     (prefixed-eval-with-env (list (my-first e) (my-second e) (duncan-lookup-env (my-third e) env 0)) env)
+     (and
+      (println "        is my-third a var that's env-ed ?")
+      (not (equal? (my-third e) '(err "free variable")))
+      (variable? (my-third e))
+      (prefixed-eval-with-env (list (my-first e) (my-second e) (duncan-lookup-env (my-third e) env 0)) env)
+     )
     ]
     ;;evaluating the fucking thing
     [
      else
+     (println "        time to evaluate :-DDDDD")
      (evaluate-program e)
     ]
   )
@@ -228,7 +254,7 @@
 ;; ============================================================
 
 ;; '(err "free variable")
-(evaluate-with-env 'x '() )
+(evaluate-with-env '(x + 1) '() )
 
 
 

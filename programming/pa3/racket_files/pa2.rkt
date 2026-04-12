@@ -435,6 +435,13 @@
   (cond
     [
      (and
+      (equal? ast '(err "free variable"))
+      (println "            you've got a free var :-3")
+      '(err "free variable")
+     )
+    ]
+    [
+     (and
       (list? (my-second ast))
       (println "            1st parameter is a list, look!")
       (print "            ")
@@ -513,7 +520,7 @@
   (or
     (and
      (println "            previous type error ?")
-     (any-error? ast)
+     (equal? ast '(err "type error"))
     )
    
     ;; numerical 
