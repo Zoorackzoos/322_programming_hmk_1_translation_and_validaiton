@@ -410,13 +410,6 @@
   (cond
     [
      (and
-      (println "    literal?")
-      (literal? e)
-     )
-    ]
-    
-    [
-     (and
       (null? e)
       (println "    e is null")
       (println "    valid")
@@ -493,16 +486,15 @@
           (println "        single element left ?")
           (= (length e) 1)
           (if
-           (or
+           (or;;conditional
             (literal? (car e))
             (list? (car e))
-            (variable? (car e))   ; <-- add this
            )
-           #t
-           (car e)
-           )
+            #t;;if yes
+            (car e);;if no
           )
-         ]
+         )
+        ]
         [
          (and
           (println "        e.size > 3 ?")
@@ -567,10 +559,6 @@
 ;; ============================================================
 
 (define (infix->prefix e)
-  ;;display
-  (println "infix->prefix")
-  (println e)
-  
  (cond
 
   ;;not valid program
@@ -626,7 +614,7 @@
 )
 
 ;;test cases
-(infix->prefix '((var (x true) (x && false))))
+(infix->prefix '(var (x (1 + 2)) (x * 3)))
 
 
 
