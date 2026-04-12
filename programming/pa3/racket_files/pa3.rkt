@@ -75,18 +75,30 @@
   (print "            ")
   (println iterator)
 
-  (print "            ")
-  (println (list-ref env iterator))
-  (print "            ")
-  (println (my-first (list-ref env iterator)))
-  (print "            ")
-  (println var)
-  
   (if
-   (equal? (my-first (list-ref env iterator)) var);;condtional
-   (my-second (list-ref env iterator));;if yes
-   (duncan-lookup-env var env (+ iterator 1));;if no
+   (or;;conditonal
+    (= (length env) iterator)
+    (= (length env) 0)
+   )
+   '(err "free variable");;if yes
+   (begin;;if no
+     (print "            ")
+     (println (list-ref env iterator))
+     (print "            ")
+     (println (my-first (list-ref env iterator)))
+     (print "            ")
+     (println var)
+  
+     (if
+      (equal? (my-first (list-ref env iterator)) var);;condtional
+      (my-second (list-ref env iterator));;if yes
+      (duncan-lookup-env var env (+ iterator 1));;if no
+     )
+   )
   )
+  
+
+  
 )
 
 
@@ -215,8 +227,8 @@
 ;; You may add more tests as you work.
 ;; ============================================================
 
-;; 15
-(evaluate-with-env '(var (x 5) (var (y 10) (x + y))) '() )
+;; '(err "free variable")
+(evaluate-with-env 'x '() )
 
 
 
