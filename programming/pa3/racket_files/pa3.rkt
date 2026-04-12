@@ -144,7 +144,7 @@
      (and
       (equal? (my-first e) 'var)
       (println "        you made a var. what the hell bro.")
-      (prefixed-eval-with-env (my-third e) (list (append (my-second e) env)))
+      (prefixed-eval-with-env (my-third e) (append (list (my-second e)) env))
      )
     ]
 
@@ -215,10 +215,8 @@
 ;; You may add more tests as you work.
 ;; ============================================================
 
-;; 5
-(evaluate-with-env '(var (x 5) x) '() )
-;; 5
-;;(evaluate-with-env 'x '((x 5)) )
+;; 15
+(evaluate-with-env '(var (x 5) (var (y 10) (x + y))) '() )
 
 
 

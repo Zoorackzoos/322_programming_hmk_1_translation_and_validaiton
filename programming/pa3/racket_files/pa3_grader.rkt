@@ -201,7 +201,7 @@
             student-evaluate-with-env (list '(x + y + 1) '((x 2) (y 3))) 6 3)
   (run-test "EvalVar" "(x && y) with x=true y=false"
             student-evaluate-with-env (list '(x && y) '((x true) (y false))) 'false 3)
-  (run-test "EvalVar" "nested ((x + y) * z) with x=1 y=2 z=3"
+  (run-test "EvalVar" "nested ((x(var (x 5) x)  (0/3) + y) * z) with x=1 y=2 z=3"
             student-evaluate-with-env (list '((x + y) * z) '((x 1) (y 2) (z 3))) 9 3))
 
 ;; ────────────────────────────────────────
