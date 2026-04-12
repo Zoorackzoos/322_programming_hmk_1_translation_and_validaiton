@@ -122,6 +122,16 @@
 
   ;;work
   (cond
+    ;;jackass single variable ahh input
+    [
+     (and
+      (not (list? e))
+      (variable? e)
+      (duncan-lookup-env e env 0)
+     )
+    ]
+    
+    ;;left or right is a variable
     [
      (variable? (my-second e))
      (prefixed-eval-with-env (list (my-first e) (duncan-lookup-env (my-second e) env 0) (my-third e)) env)
@@ -130,9 +140,10 @@
      (variable? (my-third e))
      (prefixed-eval-with-env (list (my-first e) (my-second e) (duncan-lookup-env (my-third e) env 0)) env)
     ]
+    ;;evaluating the fucking thing
     [
      else
-     (println "        TODO: evaluate the fucking thing lol")
+     (evaluate-program e)
     ]
   )
 )

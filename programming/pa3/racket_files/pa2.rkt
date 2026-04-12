@@ -575,8 +575,8 @@
 ;; ============================================================
 
 (define (evaluate-prefix ast)
-  (println "evaluate-prefix")
-  (print "    ")
+  (println "    evaluate-prefix")
+  (print "        ")
   (println ast)
   
   (cond
@@ -703,20 +703,25 @@
 ;; ============================================================
 
 (define (evaluate-program e)
-  (println "evaluate-program")
+  (println "    evaluate-program")
   (cond
     ;; 1. Call your PA1 infix->prefix
     ;; 2. If it returns an error, return that error
     ;; 3. If it returns a valid AST, pass it to evaluate-prefix
 
+    ;;pa3:
+    ;;    my pa3 functions already infix->prefix this
+    ;;    and i'm not adding jank ass parameters to do it here as well
+    
     ;; invalid program from infix->prefix
-    [
-     (any-error? (infix->prefix e))
-     (infix->prefix e)
-    ]
+    ;;[
+    ;; (any-error? (infix->prefix e))
+    ;; (infix->prefix e)
+    ;;]
 
     [
-     (evaluate-prefix (infix->prefix e))
+     ;;(evaluate-prefix (infix->prefix e))
+     (evaluate-prefix e)
     ]
     
     [
