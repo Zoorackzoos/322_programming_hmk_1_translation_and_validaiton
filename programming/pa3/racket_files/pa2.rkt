@@ -51,9 +51,6 @@
    (println "                x is a list")
    (not (null? x))
    (println "                x is not null")
-   (println "                x starts with err ?")
-   (print "                    ")
-   (println (equal? (car x) 'err))
    (equal? (car x) 'err)
   )
 )
@@ -616,15 +613,7 @@
     [(equal? ast 'true) 'true]
     [(equal? ast 'false) 'false]
 
-    ;; free var error detector
-    [
-     (and
-      (println "        free variable error ?")
-      (equal? ast '(err "free variable"))
-      (println "            yup :-)")
-     )
-     '(err "free variable")
-    ]
+    
 
     ;; type errors
     [
@@ -770,23 +759,3 @@
     ]
   )
 )
-
-
-;; ============================================================
-;; Public test cases
-;;
-;; You may add more tests as you work.
-;; ============================================================
-
-
-
-
-
-
-
-
-
-
-
-
-

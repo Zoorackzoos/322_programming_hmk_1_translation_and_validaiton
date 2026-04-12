@@ -96,11 +96,11 @@
      )
    )
   )
-  
-
-  
 )
 
+(define (is-error? x)
+  (and (list? x) (not (null? x)) (equal? (car x) 'err))
+)
 
 ;; ============================================================
 ;; extend-env
@@ -141,6 +141,8 @@
 
   ;;work
   (cond
+    [(literal? e) e]
+    
     [
      (and
       (println "        previous free var error ?")
@@ -160,27 +162,22 @@
     ]
     
     ;;declare a var in the input
-    [
-     (and
-      (println "        are you making a var ?")
-      (equal? (my-first e) 'var)
-      (println "        you made a var. what the hell bro.")
-      (if
-       (list? (my-second e));;conditional
-       (prefixed-eval-with-env (my-third e) (append (list (prefixed-eval-with-env (my-second e) env)) env));;if yes
-       (prefixed-eval-with-env (my-third e) (append (list (my-second e)) env));;if no
+    [(equal? (my-first e) 'var)
+     (if
+      (is-error? (prefixed-eval-with-env (my-second (my-second e)) env))
+      (prefixed-eval-with-env (my-second (my-second e)) env)
+      (prefixed-eval-with-env
+       (my-third e)
+       (cons (list (my-first (my-second e))
+                   (prefixed-eval-with-env (my-second (my-second e)) env))
+             env))
       )
-     )
-    ]
+     ]
 
     ;;one of the elemetns is a bastard list
     [
      (and
       (println "        is my-second a list ?")
-      (print "            ")
-      (println e)
-      (print "            ")
-      (println (not (equal? (my-second e) '(err "free variable"))))
       (not (equal? (my-second e) '(err "free variable")))
       (list? (my-second e))
       (prefixed-eval-with-env (list (my-first e) (prefixed-eval-with-env (my-second e) env) (my-third e)) env)
@@ -254,25 +251,8 @@
   (prefixed-eval-with-env (infix->prefix e) env)
 )
 
+;;(println "divizion by zero test case")
+;;(evaluate-with-env '(var (x (1 / 0)) x) '())
 
-;; ============================================================
-;; Public test cases
-;;
-;; You may add more tests as you work.
-;; ============================================================
-
-;; '(err "free variable")
-;;(evaluate-with-env '(var (x (y + 1)) x) '() )
-
-
-
-
-
-
-
-
-
-
-
-
-
+;;(println "the difficult one")
+;;(evaluate-with-env '(var (x (y + 1)) x) '())

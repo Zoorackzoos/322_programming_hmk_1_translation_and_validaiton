@@ -625,18 +625,3 @@
   ]
  )
 )
-
-;;test cases
-;;(infix->prefix '((var (x true) (x && false))))
-
-
-
-
-
-
-
-
-
-
-
-
