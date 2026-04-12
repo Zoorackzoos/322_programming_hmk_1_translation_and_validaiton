@@ -173,26 +173,6 @@
      )
     ]
 
-    ;;free var error choeckers left & right
-    [
-     (and
-      (println "    previous free var error my-second ?")
-      (list? e)
-      (>= (length e) 2)
-      (list? (my-second e))
-      (equal? (my-second e) '(err "free variable") )
-     )
-    ]
-    [
-     (and
-      (println "    previous free var error my-third ?")
-      (list? e)
-      (>= (length e) 3)
-      (list? (my-third e))
-      (equal? (my-third e) '(err "free variable") )
-     )
-    ]
-
     ;;one of the elemetns is a bastard list
     [
      (and
@@ -282,7 +262,7 @@
 ;; ============================================================
 
 ;; '(err "free variable")
-(evaluate-with-env '(var (x (y + 1)) x) '() )
+;;(evaluate-with-env '(var (x (y + 1)) x) '() )
 
 
 
