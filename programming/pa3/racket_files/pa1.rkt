@@ -402,15 +402,15 @@
 
 (define (validate-program e)
   ;;display 
-  (println "    validate-program")
-  (print "        ")
+  (println "        validate-program")
+  (print "            ")
   (println e)
 
   ;;work
   (cond
     [
      (and
-      (println "        literal?")
+      (println "            literal?")
       (literal? e)
      )
     ]
@@ -418,8 +418,8 @@
     [
      (and
       (null? e)
-      (println "        e is null")
-      (println "        valid")
+      (println "            e is null")
+      (println "            valid")
       #t
      )
     ]
@@ -427,8 +427,8 @@
     [
      (and
       (binary-op? e)
-      (println "        this is a binary operation.")
-      (println "        not valid")
+      (println "            this is a binary operation.")
+      (println "            not valid")
       e
      )
     ]
@@ -437,7 +437,7 @@
     [
      (variable? e)
      (and
-      (println "        valid variable")
+      (println "            valid variable")
       #t
      )
     ]
@@ -446,7 +446,7 @@
     [
      (symbol? e)
      (and
-      (println "        invalid bare symbol")
+      (println "            invalid bare symbol")
       e
      )
     ]
@@ -463,7 +463,7 @@
       (variable? (car (my-second e)))
      )
      (and
-      (println "        var binding confirmed")
+      (println "            var binding confirmed")
       (eq? #t (validate-program (my-second (my-second e))))
       (eq? #t (validate-program (my-third e)))
      )
@@ -471,18 +471,18 @@
 
     [
      (and
-      (println "        unknowable bools activated")
+      (println "            unknowable bools activated")
       (list? e)
       (cond
         [
          (and
-          (println "            unary shape in recursion")
+          (println "                unary shape in recursion")
           (unary-shape? e)
          )
         ]
         [
          (and
-          (println "            binary shape & both elements aren't a list")
+          (println "                binary shape & both elements aren't a list")
           (binary-shape? e)
           (not (list? (my-first e)))
           (not (list? (my-third e)))
@@ -490,7 +490,7 @@
         ]
         [
          (and
-          (println "            single element left ?")
+          (println "                single element left ?")
           (= (length e) 1)
           (if
            (or
@@ -505,21 +505,21 @@
          ]
         [
          (and
-          (println "            e.size > 3 ?")
+          (println "                e.size > 3 ?")
           (< (length e) 3)
           (car e)
          )
         ]
         [
          (and
-          (println "            (not (binary-op? (my-second e)))")
+          (println "                (not (binary-op? (my-second e)))")
           (not (binary-op? (my-second e)))
           (my-second e)
          )
         ]
         [
          (and
-          (println "            big e and non-associativty")
+          (println "                big e and non-associativty")
           (and
            (> (length e) 3)
            (non-associative-op? (my-second e))
@@ -530,7 +530,7 @@
         [
          else
          (and
-          (println "            recursion in e")
+          (println "                recursion in e")
           (validate-program (cddr e))
          )
         ]
@@ -540,7 +540,7 @@
 
     [else
      (and
-      (println "        else function reached")
+      (println "            else function reached")
       #t
      )
     ]
@@ -568,8 +568,8 @@
 
 (define (infix->prefix e)
   ;;display
-  (println "infix->prefix")
-  (print "    ")
+  (println "    infix->prefix")
+  (print "        ")
   (println e)
   
  (cond

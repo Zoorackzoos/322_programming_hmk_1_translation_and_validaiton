@@ -52,6 +52,8 @@
 ;;   implement this function
 ;; ============================================================
 (define (lookup-env var env)
+  ;;not fucking with the signature in case mr.t has a secret grader
+  
   ;;display 
   (println "lookup-env")
   (print "    ")
@@ -59,36 +61,24 @@
   (println "    ")
   (println env)
   
-  ;;(lookup-env 'x '((x 5) (y 10))) => 5
-  ;;i'll jsut treat the var name like a string. idk :-/
-  ;;i will iterate thru the list recursively
-  ;;i can't fuck with the signature so i'll do a cheecky move
-  (parse-list-given-var var env 0)
+  ;;work
+  (prefixed-eval-with-env var env 0)
 )
 
-(define (parse-list-given-var var env iterator)
+(define (duncan-lookup-env var env iterator)
   ;;display
-  (println "    parse-list-given-var")
-  (print "        ")
+  (println "        duncan-lookup-env")
+  (print "            ")
   (println var)
-  (print "        ")
+  (print "            ")
   (println env)
-  (print "        ")
+  (print "            ")
   (println iterator)
-
+  
   (if
-   (or;;conditional
-    (binary-op? var)
-    (literal? var)
-   )
-   (begin;;if yes
-     (println "        var is a operation or a literal. Not cool bro")
-     #f
-   )
-   (begin;;if no
-     (println "        var is a string, so it's a real var. Yay :D")
-     #t
-   )
+   (equal? (my-first (list-ref env iterator)) var);;condtional
+   (my-second (list-ref env iterator));;if yes
+   (prefixed-eval-with-env var env (+ iterator 1));;if no
   )
 )
 
@@ -122,24 +112,28 @@
 
 ;; helper functions for evaluator
 ;;   just put the infix->prefix version of e into this.
-;;   you could have a different design if you knew what made a e prefixed or not. i don't.
-(define (prefixed-eval-with-env e env iterator)
+(define (prefixed-eval-with-env e env)
   ;;display
   (println "    prefixed-eval-with-env")
   (print "        ")
   (println e)
   (print "        ")
   (println env)
-  (print "        ")
-  (println iterator)
-  (print "        ")
-  (println (list-ref env iterator))
 
   ;;work
-  (if
-   (equal? (my-first (list-ref env iterator)) e);;condtional
-   (my-second (list-ref env iterator));;if yes
-   (prefixed-eval-with-env e env (+ iterator 1));;if no
+  (cond
+    [
+     (variable? (my-second e))
+     (prefixed-eval-with-env (list (my-first e) (duncan-lookup-env (my-second e) env 0) (my-third e)) env)
+    ]
+    [
+     (variable? (my-third e))
+     (prefixed-eval-with-env (list (my-first e) (my-second e) (duncan-lookup-env (my-third e) env 0)) env)
+    ]
+    [
+     else
+     (println "        TODO: evaluate the fucking thing lol")
+    ]
   )
 )
 
@@ -173,7 +167,7 @@
   (println env)
 
   ;;work
-  (prefixed-eval-with-env (infix->prefix e) env 0)
+  (prefixed-eval-with-env (infix->prefix e) env)
 )
 
 
@@ -185,7 +179,10 @@
 
 ;; intended output =
 ;; 5
-(evaluate-with-env 'x '((x 5)) )
+;;(evaluate-with-env 'x '((x 5)) )
+
+;; 6
+(evaluate-with-env '(x + 1) '((x 5)))
 
 
 
